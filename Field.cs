@@ -43,5 +43,5 @@ public abstract class Field : IDrawable
     }
     public abstract bool CanEnter();
 
-    public abstract void Draw();
+    public abstract char GetSymbol();
 }
