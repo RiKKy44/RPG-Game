@@ -6,13 +6,6 @@ public class SingleHanded : Weapon
     {
         return true;
     }
-    public override char GetSymbol()
-    {
-        return 'S';
-    }
-    
-    public override void Interact(){}
-
     public override bool IsTwoHanded()
     {
         return false;

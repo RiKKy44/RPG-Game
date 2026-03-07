@@ -41,24 +41,19 @@ public abstract class Weapon : Item
     {
         return 'W';
     }
-
-    public override void Interact()
-    {
-    }
+    
     public override bool IsEquipable()
     {
         return true;
     }
-
     public override int GetDamage()
     {
         return _damage;
     }
 
-    public int GetWeight()
+    public override int GetWeight()
     {
         return _weight;
     }
-
-    public abstract bool IsTwoHanded();
+    
 }

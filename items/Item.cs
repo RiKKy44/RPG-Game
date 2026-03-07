@@ -1,8 +1,7 @@
 namespace OODProject;
 
-public abstract class Item : IDrawable, IInteractable
+public abstract class Item : IDrawable
 {
-    public abstract void Interact();
     public abstract char GetSymbol();
 
     public virtual bool IsEquipable()
@@ -15,6 +14,11 @@ public abstract class Item : IDrawable, IInteractable
     }
 
     public virtual int GetDamage()
+    {
+        return 0;
+    }
+
+    public virtual int GetWeight()
     {
         return 0;
     }
