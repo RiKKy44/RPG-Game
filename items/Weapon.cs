@@ -6,13 +6,13 @@ public abstract class Weapon : Item
 
     private int _weight;
 
-    protected int Weight
+    public int Weight
     {
         get
         {
             return _weight;
         }
-        set
+        protected set
         {
             if (value < 0)
             {
@@ -21,10 +21,10 @@ public abstract class Weapon : Item
             _weight = value;
         }
     }
-    protected int Damage
+    public int Damage
     {
         get { return _damage; }
-        set {
+        protected set {
             if (value < 0)
             {
                 throw new ArgumentOutOfRangeException("Damage cannot be less than 0");

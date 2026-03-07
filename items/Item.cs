@@ -3,7 +3,6 @@ namespace OODProject;
 public abstract class Item : IDrawable
 {
     public abstract char GetSymbol();
-
     public virtual bool IsEquipable()
     {
         return false;
@@ -12,7 +11,6 @@ public abstract class Item : IDrawable
     {
         return false;
     }
-
     public virtual int GetDamage()
     {
         return 0;

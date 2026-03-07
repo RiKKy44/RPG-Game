@@ -1,7 +1,11 @@
 namespace OODProject;
 
-public class Gold : Currency
+public class Coin : Currency
 {
+    public Coin(int value) : base(value)
+    {
+    }
+    
     public override void Remove(int amount)
     {
         int newValue = Count - amount;
@@ -18,10 +22,8 @@ public class Gold : Currency
         Count += amount;
     }
 
-    public Gold(int value) : base(value){}
-
     public override char GetSymbol()
     {
-        return Symbols.Gold;
+        return Symbols.Coin;
     }
 }
