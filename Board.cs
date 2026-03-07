@@ -1,6 +1,6 @@
 namespace OODProject;
 
-public class Board : Game
+public class Board
 {
     
 }
