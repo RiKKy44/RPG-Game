@@ -114,6 +114,12 @@ public class Player : Entity
         return item;
     }
 
+    public Item DropItem(int index)
+    {
+        Item item = _inventory[index];
+        _inventory.RemoveAt(index);
+        return item;
+    }
     public void Unequip(HandSlot slot)
     {
         if ((RightHand!=null && RightHand.IsTwoHanded()) || (LeftHand!=null && LeftHand.IsTwoHanded()))

@@ -45,6 +45,15 @@ public class Game
         {
             _renderer.InventoryPointer++;
         }
+        
+        else if (key == ConsoleKey.Q)
+        {
+            if (_player.Inventory.Count - 1 >= _renderer.InventoryPointer)
+            {
+                Item item = _player.DropItem(_renderer.InventoryPointer);
+                _board.GetField(_player.CurrentPosition).AddItem(item);
+            }
+        }
 
         Position direction = key switch
         {
