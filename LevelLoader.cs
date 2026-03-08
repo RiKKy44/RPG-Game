@@ -12,7 +12,7 @@ public class LevelLoader
         
         board.SetField(new Position(4, 3), new Wall());
         
-        board.GetField(new Position (8,32)).AddItem(new Coin());
+        board.GetField(new Position (8,21)).AddItem(new Coin());
 
         board.SetField(new Position(5, 3), new Wall());
         

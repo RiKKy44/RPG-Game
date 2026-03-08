@@ -23,9 +23,9 @@ public class Renderer
                 Console.Write(GetSymbolAt(position));
                 Console.Write(' ');
             }
-            Console.Write("  |  ");
+            Console.Write("     |   ");
             RenderSidebar(row);
-            Console.WriteLine();
+            Console.Write("\r\n");
         }
     }
 

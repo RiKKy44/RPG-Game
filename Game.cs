@@ -11,7 +11,7 @@ public class Game
     public Game()
     {
         _board = new LevelLoader().Load();
-        _player = new Player();
+        _player = new Player( position: new Position(1, 1));
         _renderer = new Renderer(_board, _player);
         _running = true;
     }
@@ -58,6 +58,7 @@ public class Game
         {
             _renderer.Render();
             HandleInput();
+            Console.Clear();
         }
     }
 }
