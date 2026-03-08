@@ -7,6 +7,7 @@ public class Board
     
     public Board()
     {
+        _fields = new Field[GameConfig.Width, GameConfig.Height];
         for (int i = 0; i < GameConfig.Width; i++)
         {
             for (int j = 0; j < GameConfig.Height; j++)
@@ -14,12 +15,11 @@ public class Board
                 Position position = new Position(i, j);
                 if (i == GameConfig.Width - 1 || j == GameConfig.Height - 1|| i==0 || j==0)
                 {
-                    SetField(position, new Wall(position));
-                    
+                    SetField(position, new Wall());
                 }
                 else
                 {
-                    SetField(position, new EmptyField(position));
+                    SetField(position, new EmptyField());
                 }
             }
         }
@@ -36,6 +36,11 @@ public class Board
 
     public Field GetField(Position position)
     {
+        if (position.X < 0 || position.X >= GameConfig.Width ||
+            position.Y < 0 || position.Y >= GameConfig.Height)
+        {
+            throw new ArgumentOutOfRangeException("Position out of bounds");
+        }
         return _fields[position.X, position.Y];
     }
     public IEnumerable<Field> GetAllFields()
