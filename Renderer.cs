@@ -6,26 +6,43 @@ public class Renderer
     private Board _board;
     private Player _player;
     private const int SidebarWidth = 30;
-    public Renderer(Board board, Player player)
+    private int _inventoryPointer;
+
+    public int InventoryPointer
+    {
+        get { return _inventoryPointer; }
+        set
+        {
+            if (value < 0)
+                _inventoryPointer = 0;
+            else if (value > _player.InventorySize - 1)
+                _inventoryPointer = _player.InventorySize - 1;
+            else
+                _inventoryPointer = value;
+        }
+    }
+    
+
+public Renderer(Board board, Player player)
     {
         _board = board;
         _player = player;
+        _inventoryPointer = 0;
     }
 
     public void Render()
     {
-        Console.SetCursorPosition(0, 0);
         for (int row = 0; row < GameConfig.Height; row++)
         {
+            Console.SetCursorPosition(0, row);
             for (int col = 0; col < GameConfig.Width; col++)
             {
                 Position position = new Position(col, row);
                 Console.Write(GetSymbolAt(position));
                 Console.Write(' ');
             }
-            Console.Write("     |   ");
-            RenderSidebar(row);
-            Console.Write("\r\n");
+            Console.Write("        |         ");
+            RenderSidebar(row); 
         }
     }
 
@@ -82,10 +99,11 @@ public class Renderer
     }
     private string GetInventoryRow(int index)
     {
+        string prefix = index == InventoryPointer ? ">" : " ";
         if (index >= _player.Inventory.Count)
-            return $"{index + 1}. ---";
+            return $"{prefix} {index + 1}. ---";
         Item item = _player.Inventory[index];
-        return $"{index + 1}. {item.GetSymbol()}";
+        return $"{prefix} {index + 1}. {item.GetSymbol()}";
     }
     private string GetHandDisplay(Item? item)
     {

@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using OODProject.Entities;
 namespace OODProject;
 
@@ -33,8 +34,18 @@ public class Game
         else if (key == ConsoleKey.Escape)
         {
             _running = false;
+            Console.Clear();
+            Console.WriteLine("GOODBYE!");
         }
-        
+        else if (key == ConsoleKey.UpArrow)
+        {
+            _renderer.InventoryPointer--;
+        }
+        else if (key == ConsoleKey.DownArrow)
+        {
+            _renderer.InventoryPointer++;
+        }
+
         Position direction = key switch
         {
             ConsoleKey.W => Direction.Up,
@@ -58,7 +69,6 @@ public class Game
         {
             _renderer.Render();
             HandleInput();
-            Console.Clear();
         }
     }
 }

@@ -11,6 +11,8 @@ public class LevelLoader
         board.GetField(new Position (7,6)).AddItem(new Coin());
         
         board.SetField(new Position(4, 3), new Wall());
+
+        board.GetField(new Position(12, 12)).AddItem(new DoubleHanded(5, 5));
         
         board.GetField(new Position (8,21)).AddItem(new Coin());
 

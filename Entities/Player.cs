@@ -9,29 +9,30 @@ public class Player : Entity
     private int _goldCount;
 
     private int _coinCount;
-
     public int GoldCount => _goldCount;
     public int CoinCount => _coinCount;
     public IReadOnlyList<Item> Inventory => _inventory;
+
     public int InventorySize
     {
-        get{ return _inventorySize;}
+        get { return _inventorySize; }
         protected set
         {
             if (value < 0)
             {
                 throw new ArgumentException("Inventory size can't be negative");
             }
+
             _inventorySize = value;
         }
     }
-    
+
     public Player(int inventorySize = 10, Position position = default) : base(position)
     {
         InventorySize = inventorySize;
         Strength = 5;
         Health = 100;
-        Dexterity = 5;
+        Dexterity = 5; 
         Wisdom = 5;
         Luck = 5;
         Aggression = 5;
@@ -172,5 +173,5 @@ public class Player : Entity
             }
         }
     }
-
+    
 }
