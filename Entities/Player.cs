@@ -9,6 +9,9 @@ public class Player : Entity
     private int _goldCount;
 
     private int _coinCount;
+
+    public int GoldCount => _goldCount;
+    public int CoinCount => _coinCount;
     public IReadOnlyList<Item> Inventory => _inventory;
     public int InventorySize
     {
@@ -33,6 +36,8 @@ public class Player : Entity
         Luck = 5;
         Aggression = 5;
         _inventory = new List<Item>();
+        _goldCount = 0;
+        _coinCount = 0;
     }
 
     public void Equip(Item item, HandSlot slot)
@@ -87,9 +92,23 @@ public class Player : Entity
     }
     public Item DropItem(Item item)
     {
-        if (!_inventory.Remove(item))
+        if (!_inventory.Contains(item) && !LeftHand.Equals(item) && !RightHand.Equals(item))
         {
-            throw new InvalidOperationException("Item is not in inventory");
+            throw new InvalidOperationException("Item is not in inventory or hands");
+        }
+
+        if (LeftHand.Equals(item))
+        {
+            LeftHand = null;
+        }
+
+        else if (RightHand.Equals(item))
+        {
+            RightHand = null;
+        }
+        else
+        {
+            _inventory.Remove(item);
         }
         return item;
     }
@@ -115,7 +134,7 @@ public class Player : Entity
         }
     }
 
-    internal void AddGold(int gold)
+    public void AddGold(int gold)
     {
         if (gold > 0)
         {
@@ -127,11 +146,11 @@ public class Player : Entity
         }
     }
 
-    internal void AddCoin(int coin)
+    public void AddCoin(int coin)
     {
         if (coin > 0)
         {
-            _goldCount += coin;
+            _coinCount += coin;
         }
         else
         {
