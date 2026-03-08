@@ -17,6 +17,7 @@ public class Player : Entity
             {
                 throw new ArgumentException("Inventory size can't be negative");
             }
+            _inventorySize = value;
         }
     }
 
@@ -29,27 +30,25 @@ public class Player : Entity
         Wisdom = 5;
         Luck = 5;
         Aggression = 5;
+        _inventory = new List<Item>();
     }
 
     public void Equip(Item item, HandSlot slot)
     {
+        if (!item.IsEquipable())
+        {
+            throw new InvalidOperationException("Cannot equip an item that is not equipable");
+        }
         if (!_inventory.Contains(item))
         {
             throw new InvalidOperationException($"Item is not in inventory");
         }
         if (item.IsTwoHanded())
         {
-            if (LeftHand != null)
-            {
-                _inventory.Add(LeftHand);
-                LeftHand = item;
-            }
-
-            if (RightHand != null)
-            {
-                _inventory.Add(RightHand);
-                RightHand = item;
-            }
+            Unequip(HandSlot.Left);
+            Unequip(HandSlot.Right);
+            RightHand = item;
+            LeftHand = item;
             _inventory.Remove(item);
         }
         else
@@ -59,8 +58,8 @@ public class Player : Entity
                 if (RightHand != null)
                 {
                     _inventory.Add(RightHand);
-                    RightHand = item;
                 }
+                RightHand = item;
                 _inventory.Remove(item);
             }
 
@@ -69,8 +68,8 @@ public class Player : Entity
                 if (LeftHand != null)
                 {
                     _inventory.Add(LeftHand);
-                    LeftHand = item;
                 }
+                LeftHand = item;
                 _inventory.Remove(item);
             }
         }
@@ -83,19 +82,32 @@ public class Player : Entity
 
     public void PickUpItem(Item item)
     {
+        if (_inventory.Count >= _inventorySize)
+        {
+            throw new InvalidOperationException("Inventory is full");
+        }
         _inventory.Add(item);
     }
 
     public Item DropItem(Item item)
     {
-        _inventory.Remove(item);
-        
+        if (!_inventory.Remove(item))
+        {
+            throw new InvalidOperationException("Item is not in inventory");
+        }
         return item;
     }
 
     public void Unequip(HandSlot slot)
     {
-        if (slot == HandSlot.Right && RightHand != null)
+        if ((RightHand!=null && RightHand.IsTwoHanded()) || (LeftHand!=null && LeftHand.IsTwoHanded()))
+        {
+            Item twoHanded = RightHand ?? LeftHand;
+            _inventory.Add(twoHanded);
+            RightHand = null;
+            LeftHand = null;
+        }
+        else if (slot == HandSlot.Right && RightHand != null)
         {
             _inventory.Add(RightHand);
             RightHand = null;
