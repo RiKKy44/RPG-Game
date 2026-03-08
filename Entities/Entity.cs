@@ -16,9 +16,9 @@ public abstract class Entity : IDrawable
 
     private Position _position;
 
-    private Item _leftHand;
+    private Item? _leftHand;
     
-    private Item _rightHand;
+    private Item? _rightHand;
     public int Strength
     {
         get { return _strength; }

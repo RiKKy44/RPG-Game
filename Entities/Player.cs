@@ -20,7 +20,7 @@ public class Player : Entity
         }
     }
 
-    public Player(Position position, int inventorySize) : base(position)
+    public Player(int inventorySize, Position position = default) : base(position)
     {
         InventorySize = inventorySize;
         Strength = 5;
@@ -56,4 +56,6 @@ public class Player : Entity
     {
         return Symbols.Player;
     }
+    
+    
 }
