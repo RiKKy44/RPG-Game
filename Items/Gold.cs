@@ -1,7 +1,10 @@
+using OODProject.Entities;
+
 namespace OODProject;
 
 public class Gold : Currency
 {
+    public const int Value = 1;
     public override void Remove(int amount)
     {
         int newValue = Count - amount;
@@ -17,11 +20,14 @@ public class Gold : Currency
     {
         Count += amount;
     }
-
-    public Gold(int value) : base(value){}
-
+    
     public override char GetSymbol()
     {
         return Symbols.Gold;
+    }
+
+    public override void OnPickUp(Player player)
+    {
+        player.AddGold(Value);
     }
 }

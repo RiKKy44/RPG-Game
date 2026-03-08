@@ -6,11 +6,10 @@ public class Player : Entity
 
     private List<Item> _inventory;
 
-    private Gold _gold;
-    
-    private Coin _coin;
-    public IReadOnlyList<Item> Inventory => _inventory;
+    private int _goldCount;
 
+    private int _coinCount;
+    public IReadOnlyList<Item> Inventory => _inventory;
     public int InventorySize
     {
         get{ return _inventorySize;}
@@ -23,7 +22,7 @@ public class Player : Entity
             _inventorySize = value;
         }
     }
-
+    
     public Player(int inventorySize, Position position = default) : base(position)
     {
         InventorySize = inventorySize;
@@ -82,16 +81,10 @@ public class Player : Entity
     {
         return Symbols.Player;
     }
-
     public void PickUpItem(Item item)
     {
-        if (_inventory.Count >= _inventorySize)
-        {
-            throw new InvalidOperationException("Inventory is full");
-        }
-        _inventory.Add(item);
+        item.OnPickUp(this);
     }
-
     public Item DropItem(Item item)
     {
         if (!_inventory.Remove(item))
@@ -106,19 +99,59 @@ public class Player : Entity
         if ((RightHand!=null && RightHand.IsTwoHanded()) || (LeftHand!=null && LeftHand.IsTwoHanded()))
         {
             Item twoHanded = RightHand ?? LeftHand;
-            _inventory.Add(twoHanded);
+            AddToInventory(twoHanded);
             RightHand = null;
             LeftHand = null;
         }
         else if (slot == HandSlot.Right && RightHand != null)
         {
-            _inventory.Add(RightHand);
+            AddToInventory(RightHand);
             RightHand = null;
         }
         else if (slot == HandSlot.Left && LeftHand != null)
         {
-            _inventory.Add(LeftHand);
+            AddToInventory(LeftHand);
             LeftHand = null;
         }
     }
+
+    internal void AddGold(int gold)
+    {
+        if (gold > 0)
+        {
+            _goldCount += gold;
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException(nameof(gold), "Gold cannot be negative");
+        }
+    }
+
+    internal void AddCoin(int coin)
+    {
+        if (coin > 0)
+        {
+            _goldCount += coin;
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException(nameof(coin), "Coin cannot be negative");
+        }
+    }
+
+    internal void AddToInventory(Item item)
+    {
+        if (item != null)
+        {
+            if (_inventory.Count < _inventorySize)
+            {
+                _inventory.Add(item);
+            }
+            else
+            {
+                throw new InvalidOperationException("Inventory is full");
+            }
+        }
+    }
+
 }

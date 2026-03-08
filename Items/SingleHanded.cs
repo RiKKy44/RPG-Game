@@ -1,3 +1,5 @@
+using OODProject.Entities;
+
 namespace OODProject;
 
 public class SingleHanded : Weapon
@@ -12,5 +14,10 @@ public class SingleHanded : Weapon
     }
 
     public SingleHanded(int damage, int weight) : base(damage, weight) {
+    }
+
+    public override void OnPickUp(Player player)
+    {
+        player.AddToInventory(this);
     }
 }

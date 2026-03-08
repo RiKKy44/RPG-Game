@@ -1,3 +1,5 @@
+using OODProject.Entities;
+
 namespace OODProject;
 
 public class DoubleHanded : Weapon
@@ -8,5 +10,9 @@ public class DoubleHanded : Weapon
     {
         return true;
     }
-    
+
+    public override void OnPickUp(Player player)
+    {
+        player.AddToInventory(this);
+    }
 }
