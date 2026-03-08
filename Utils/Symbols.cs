@@ -4,7 +4,7 @@ public static class Symbols
 {
     public const char Wall = '█';
     
-    public const char EmptyField = '\0';
+    public const char EmptyField = ' ';
     
     public const char Player = '¶';
     

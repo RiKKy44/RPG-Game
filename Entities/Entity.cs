@@ -6,7 +6,7 @@ public abstract class Entity : IDrawable
 
     private int _dexterity;
 
-    public int _health;
+    private int _health;
 
     private int _luck;
 

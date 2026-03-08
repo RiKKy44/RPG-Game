@@ -26,7 +26,7 @@ public class Player : Entity
         }
     }
     
-    public Player(int inventorySize, Position position = default) : base(position)
+    public Player(int inventorySize = 10, Position position = default) : base(position)
     {
         InventorySize = inventorySize;
         Strength = 5;

@@ -1,6 +1,63 @@
+using OODProject.Entities;
 namespace OODProject;
 
 public class Game
 {
-    
+    private Board _board;
+    private Player _player;
+    private Renderer _renderer;
+    private bool _running;
+
+    public Game()
+    {
+        _board = new LevelLoader().Load();
+        _player = new Player();
+        _renderer = new Renderer(_board, _player);
+        _running = true;
+    }
+
+    private void HandleInput()
+    {       
+        ConsoleKey key = Console.ReadKey(true).Key;
+        
+        if (key == ConsoleKey.E)
+        {
+            Field currentField = _board.GetField(_player.CurrentPosition);
+            if (currentField.Items.Count > 0)
+            {
+                Item item = currentField.Items[0];
+                _player.PickUpItem(item);
+                currentField.RemoveItem(item);
+            }
+        }
+        else if (key == ConsoleKey.Escape)
+        {
+            _running = false;
+        }
+        
+        Position direction = key switch
+        {
+            ConsoleKey.W => Direction.Up,
+            ConsoleKey.S => Direction.Down,
+            ConsoleKey.A => Direction.Left,
+            ConsoleKey.D => Direction.Right,
+            _ => new Position(0, 0)
+        };
+        Position newPosition = _player.CurrentPosition + direction;
+        if (_board.CanEnter(newPosition))
+        {
+            _player.MoveTo(newPosition);
+        }
+    }
+
+    public void Run()
+    {
+        Console.Clear();
+        Console.CursorVisible = false;
+        while (_running)
+        {
+            _renderer.Render();
+            HandleInput();
+        }
+    }
 }
