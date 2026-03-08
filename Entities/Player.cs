@@ -5,7 +5,10 @@ public class Player : Entity
     private int _inventorySize;
 
     private List<Item> _inventory;
+
+    private Gold _gold;
     
+    private Coin _coin;
     public IReadOnlyList<Item> Inventory => _inventory;
 
     public int InventorySize

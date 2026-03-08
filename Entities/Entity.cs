@@ -145,5 +145,4 @@ public abstract class Entity : IDrawable
     {
         CurrentPosition = newPosition;
     }
-    
 }

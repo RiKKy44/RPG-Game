@@ -20,4 +20,6 @@ public abstract class Item : IDrawable
     {
         return 0;
     }
+
+    public abstract void OnPickUp(Player player);
 }
