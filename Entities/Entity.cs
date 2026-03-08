@@ -6,7 +6,7 @@ public abstract class Entity : IDrawable
 
     private int _dexterity;
 
-    private int _health;
+    public int _health;
 
     private int _luck;
 
@@ -98,13 +98,13 @@ public abstract class Entity : IDrawable
         }
     }
 
-    public Item LeftHand
+    public Item? LeftHand
     {
         get { return _leftHand; }
         protected set { _leftHand = value; }
     }
 
-    public Item RightHand
+    public Item? RightHand
     {
         get { return _rightHand; }
         protected set { _rightHand = value; }
@@ -131,6 +131,10 @@ public abstract class Entity : IDrawable
         Aggression = aggression;
         
         Wisdom = wisdom;
+        
+        LeftHand = null;
+        
+        RightHand = null;
     }
 
     public Entity(Position position) : this(position, 0, 0, 0, 0, 0, 0) { }

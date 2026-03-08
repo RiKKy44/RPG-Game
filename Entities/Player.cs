@@ -33,21 +33,45 @@ public class Player : Entity
 
     public void Equip(Item item, HandSlot slot)
     {
+        if (!_inventory.Contains(item))
+        {
+            throw new InvalidOperationException($"Item is not in inventory");
+        }
         if (item.IsTwoHanded())
         {
-            LeftHand = item;
-            RightHand = item;
+            if (LeftHand != null)
+            {
+                _inventory.Add(LeftHand);
+                LeftHand = item;
+            }
+
+            if (RightHand != null)
+            {
+                _inventory.Add(RightHand);
+                RightHand = item;
+            }
+            _inventory.Remove(item);
         }
         else
         {
             if (slot == HandSlot.Right)
             {
-                RightHand = item;
+                if (RightHand != null)
+                {
+                    _inventory.Add(RightHand);
+                    RightHand = item;
+                }
+                _inventory.Remove(item);
             }
 
             else if (slot == HandSlot.Left)
             {
-                LeftHand = item;
+                if (LeftHand != null)
+                {
+                    _inventory.Add(LeftHand);
+                    LeftHand = item;
+                }
+                _inventory.Remove(item);
             }
         }
     }
@@ -56,6 +80,30 @@ public class Player : Entity
     {
         return Symbols.Player;
     }
-    
-    
+
+    public void PickUpItem(Item item)
+    {
+        _inventory.Add(item);
+    }
+
+    public Item DropItem(Item item)
+    {
+        _inventory.Remove(item);
+        
+        return item;
+    }
+
+    public void Unequip(HandSlot slot)
+    {
+        if (slot == HandSlot.Right && RightHand != null)
+        {
+            _inventory.Add(RightHand);
+            RightHand = null;
+        }
+        else if (slot == HandSlot.Left && LeftHand != null)
+        {
+            _inventory.Add(LeftHand);
+            LeftHand = null;
+        }
+    }
 }
