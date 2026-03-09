@@ -40,9 +40,9 @@ public Renderer(Board board, Player player)
                 Position position = new Position(col, row);
                 Console.Write(GetSymbolAt(position));
                 Console.Write(' ');
-            }
+           }
             Console.Write("        |         ");
-            RenderSidebar(row); 
+            RenderSidebar(row);
         }
     }
 

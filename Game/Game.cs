@@ -75,6 +75,7 @@ public class Game
         
         else if (key == ConsoleKey.H)
         {
+            
             _player.Unequip(HandSlot.Left);
             _player.Unequip(HandSlot.Right);
         }
