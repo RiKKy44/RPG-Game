@@ -15,6 +15,10 @@ public class LevelLoader
         board.GetField(new Position(12, 12)).AddItem(new DoubleHanded(5, 5));
         
         board.GetField(new Position (8,21)).AddItem(new Coin());
+        
+        board.GetField(new Position(14,17)).AddItem(new SingleHanded(5, 5));
+
+        board.GetField(new Position(4,16)).AddItem(new Gold());
 
         board.SetField(new Position(5, 3), new Wall());
         

@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using System.Runtime.Versioning;
 using OODProject.Entities;
 namespace OODProject;
 
@@ -54,6 +55,30 @@ public class Game
                 _board.GetField(_player.CurrentPosition).AddItem(item);
             }
         }
+        
+        else if (key == ConsoleKey.F)
+        {
+            if (_renderer.InventoryPointer <= _player.Inventory.Count - 1)
+            {
+                _player.Equip(_player.Inventory[_renderer.InventoryPointer], HandSlot.Right);
+
+            }
+        }
+        else if (key == ConsoleKey.G)
+        {
+            if (_renderer.InventoryPointer <= _player.Inventory.Count - 1)
+            {
+                _player.Equip(_player.Inventory[_renderer.InventoryPointer], HandSlot.Left);
+
+            }
+        }
+        
+        else if (key == ConsoleKey.H)
+        {
+            _player.Unequip(HandSlot.Left);
+            _player.Unequip(HandSlot.Right);
+        }
+        
 
         Position direction = key switch
         {

@@ -15,4 +15,9 @@ public class DoubleHanded : Weapon
     {
         player.AddToInventory(this);
     }
+
+    public override char GetSymbol()
+    {
+        return Symbols.DoubleHanded;
+    }
 }

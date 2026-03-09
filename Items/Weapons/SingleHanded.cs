@@ -20,4 +20,9 @@ public class SingleHanded : Weapon
     {
         player.AddToInventory(this);
     }
+
+    public override char GetSymbol()
+    {
+        return Symbols.SingleHanded;
+    }
 }

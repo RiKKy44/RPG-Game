@@ -13,4 +13,8 @@ public static class Symbols
     public const char Gold = 'G';
     
     public const char Coin = '$';
+
+    public const char SingleHanded = '†';
+    
+    public const char DoubleHanded = '‡';
 }
