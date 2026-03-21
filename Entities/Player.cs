@@ -65,7 +65,15 @@ public class Player : Entity
             {
                 if (RightHand != null)
                 {
-                    _inventory.Add(RightHand);
+                    if (RightHand.IsTwoHanded())
+                    {
+                        _inventory.Add(RightHand);
+                        LeftHand = null;
+                    }
+                    else
+                    {
+                        _inventory.Add(RightHand);
+                    }
                 }
                 RightHand = item;
                 _inventory.Remove(item);
@@ -75,7 +83,15 @@ public class Player : Entity
             {
                 if (LeftHand != null)
                 {
-                    _inventory.Add(LeftHand);
+                    if (LeftHand.IsTwoHanded())
+                    {
+                        _inventory.Add(LeftHand);
+                        RightHand = null;
+                    }
+                    else
+                    {
+                        _inventory.Add(LeftHand);
+                    }
                 }
                 LeftHand = item;
                 _inventory.Remove(item);
@@ -86,6 +102,11 @@ public class Player : Entity
     public override char GetSymbol()
     {
         return Symbols.Player;
+    }
+
+    public override string GetName()
+    {
+        return "Player";
     }
     public void PickUpItem(Item item)
     {
@@ -179,5 +200,4 @@ public class Player : Entity
             }
         }
     }
-    
 }

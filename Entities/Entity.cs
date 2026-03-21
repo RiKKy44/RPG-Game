@@ -141,6 +141,7 @@ public abstract class Entity : IDrawable
 
     public abstract char GetSymbol();
 
+    public abstract string GetName();
     public void MoveTo(Position newPosition)
     {
         CurrentPosition = newPosition;

@@ -1,3 +1,6 @@
+using OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
+using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
+
 namespace OODProject;
 
 public class LevelLoader
@@ -12,11 +15,11 @@ public class LevelLoader
         
         board.SetField(new Position(4, 3), new Wall());
 
-        board.GetField(new Position(12, 12)).AddItem(new DoubleHanded(5, 5));
+        board.GetField(new Position(12, 12)).AddItem(new Dagger());
         
         board.GetField(new Position (8,21)).AddItem(new Coin());
         
-        board.GetField(new Position(14,17)).AddItem(new SingleHanded(5, 5));
+        board.GetField(new Position(14,17)).AddItem(new GreatAxe());
 
         board.GetField(new Position(4,16)).AddItem(new Gold());
 

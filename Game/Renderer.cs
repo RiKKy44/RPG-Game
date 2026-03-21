@@ -103,7 +103,7 @@ public Renderer(Board board, Player player)
         if (index >= _player.Inventory.Count)
             return $"{prefix} {index + 1}. ---";
         Item item = _player.Inventory[index];
-        return $"{prefix} {index + 1}. {item.GetSymbol()}";
+        return $"{prefix} {index + 1}. {item.GetSymbol()} ({item.GetName()})";
     }
     private string GetHandDisplay(Item? item)
     {
@@ -111,7 +111,7 @@ public Renderer(Board board, Player player)
         {
             return "empty";
         }
-        return $"{item.GetSymbol()} {(item.IsTwoHanded() ? "(2H)" : "(1H)")}";
+        return $"{item.GetSymbol()} {item.GetName()}";
     }
     
     private string GetStandingOnInfo()

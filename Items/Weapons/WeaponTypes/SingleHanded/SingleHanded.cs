@@ -1,8 +1,8 @@
 using OODProject.Entities;
 
-namespace OODProject;
+namespace OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 
-public class SingleHanded : Weapon
+public abstract class SingleHanded : Weapon
 {
     public override bool IsEquipable()
     {
@@ -25,4 +25,5 @@ public class SingleHanded : Weapon
     {
         return Symbols.SingleHanded;
     }
+
 }

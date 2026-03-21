@@ -11,4 +11,9 @@ public class Wall : Field
     {
         return Symbols.Wall;
     }
+    public override string GetName()
+    {
+        return "Wall";
+    }
+
 }

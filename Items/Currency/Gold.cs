@@ -30,4 +30,9 @@ public class Gold : Currency
     {
         player.AddGold(Value);
     }
+
+    public override string GetName()
+    {
+        return "Gold";
+    }
 }

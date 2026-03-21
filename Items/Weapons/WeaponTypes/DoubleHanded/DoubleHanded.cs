@@ -1,8 +1,8 @@
 using OODProject.Entities;
 
-namespace OODProject;
+namespace OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
 
-public class DoubleHanded : Weapon
+public abstract class DoubleHanded : Weapon
 {
     public DoubleHanded(int damage, int weight) : base(damage, weight){}
 

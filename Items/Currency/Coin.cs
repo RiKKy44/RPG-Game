@@ -28,4 +28,10 @@ public class Coin : Currency
     {
         player.AddCoin(Value);
     }
+
+
+    public override string GetName()
+    {
+        return "Coin";
+    }
 }

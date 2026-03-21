@@ -4,6 +4,7 @@ namespace OODProject;
 public abstract class Item : IDrawable
 {
     public abstract char GetSymbol();
+    public abstract string GetName();
     public virtual bool IsEquipable()
     {
         return false;

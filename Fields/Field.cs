@@ -28,4 +28,6 @@ public abstract class Field : IDrawable
     public abstract bool CanEnter();
 
     public abstract char GetSymbol();
+
+    public abstract string GetName();
 }
