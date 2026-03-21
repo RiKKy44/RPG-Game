@@ -5,10 +5,7 @@ public abstract class Item : IDrawable
 {
     public abstract char GetSymbol();
     public abstract string GetName();
-    public virtual bool IsEquipable()
-    {
-        return false;
-    }
+    public abstract bool IsEquipable();
     public virtual bool IsTwoHanded()
     {
         return false;

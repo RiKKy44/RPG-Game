@@ -17,4 +17,8 @@ public static class Symbols
     public const char SingleHanded = '†';
     
     public const char DoubleHanded = '‡';
+
+    public const char Rock = 'o';
+
+    public const char Heal = '+';
 }

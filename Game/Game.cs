@@ -60,7 +60,14 @@ public class Game
         {
             if (_renderer.InventoryPointer <= _player.Inventory.Count - 1)
             {
-                _player.Equip(_player.Inventory[_renderer.InventoryPointer], HandSlot.Right);
+                Item item = _player.Inventory[_renderer.InventoryPointer];
+
+                if (!item.IsEquipable())
+                {
+                    return;
+                }
+
+                _player.Equip(item, HandSlot.Right);
 
             }
         }
@@ -68,7 +75,12 @@ public class Game
         {
             if (_renderer.InventoryPointer <= _player.Inventory.Count - 1)
             {
-                _player.Equip(_player.Inventory[_renderer.InventoryPointer], HandSlot.Left);
+                Item item = _player.Inventory[_renderer.InventoryPointer];
+                if(!item.IsEquipable())
+                {
+                    return;
+                }
+                _player.Equip(item, HandSlot.Left);
 
             }
         }

@@ -14,11 +14,14 @@ public abstract class Entity : IDrawable
 
     private int _wisdom;
 
+    private int _maxHealth;
+
     private Position _position;
 
     private Item? _leftHand;
     
     private Item? _rightHand;
+
     public int Strength
     {
         get { return _strength; }
@@ -85,6 +88,21 @@ public abstract class Entity : IDrawable
         }
     }
 
+
+    public int MaxHealth
+    {
+        get
+            { return _maxHealth; }
+        protected set
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException($"Max Health cannot be less than 0");
+            }
+
+            _maxHealth = value;
+        }
+    }
     public int Wisdom
     {
         get { return _wisdom; }
@@ -116,7 +134,7 @@ public abstract class Entity : IDrawable
         protected set {_position = value; }
     }
 
-    public Entity(Position position, int strength, int dexterity, int health, int luck, int aggression, int wisdom)
+    public Entity(Position position, int strength, int dexterity, int health, int luck, int aggression, int wisdom, int maxHealh)
     {
         CurrentPosition = position;
         
@@ -135,12 +153,15 @@ public abstract class Entity : IDrawable
         LeftHand = null;
         
         RightHand = null;
+
+        MaxHealth = maxHealh;
     }
 
-    public Entity(Position position) : this(position, 0, 0, 0, 0, 0, 0) { }
+    public Entity(Position position) : this(position, 0, 0, 0, 0, 0, 0, 0) { }
 
     public abstract char GetSymbol();
 
+    public abstract void Heal(int value);
     public abstract string GetName();
     public void MoveTo(Position newPosition)
     {

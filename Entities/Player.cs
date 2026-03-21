@@ -31,7 +31,7 @@ public class Player : Entity
     {
         InventorySize = inventorySize;
         Strength = 5;
-        Health = 100;
+        Health = 50;
         Dexterity = 5; 
         Wisdom = 5;
         Luck = 5;
@@ -39,6 +39,7 @@ public class Player : Entity
         _inventory = new List<Item>();
         _goldCount = 0;
         _coinCount = 0;
+        MaxHealth = 100;
     }
 
     public void Equip(Item item, HandSlot slot)
@@ -198,6 +199,19 @@ public class Player : Entity
             {
                 throw new InvalidOperationException("Inventory is full");
             }
+        }
+    }
+
+
+    public override void Heal(int value)
+    {
+        if(Health + value > MaxHealth)
+        {
+            Health = MaxHealth;
+        }
+        else
+        {
+            Health += value;
         }
     }
 }

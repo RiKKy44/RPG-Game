@@ -1,3 +1,4 @@
+using OODProject.Items.UnusableItems;
 using OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
 using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 
@@ -24,7 +25,11 @@ public class LevelLoader
         board.GetField(new Position(4,16)).AddItem(new Gold());
 
         board.SetField(new Position(5, 3), new Wall());
-        
+
+        board.GetField(new Position(6, 15)).AddItem(new HealingPlus());
+
+        board.GetField(new Position(2, 13)).AddItem(new Rock());
+
         return board;
     }    
 }

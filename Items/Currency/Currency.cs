@@ -14,9 +14,10 @@ public abstract class Currency : Item
         }
         
     }
-    
-    public abstract void Add(int value);
-    
-    public abstract void Remove(int value);
+
+    public override bool IsEquipable()
+    {
+        return false;
+    }
     
 }

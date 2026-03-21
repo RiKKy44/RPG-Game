@@ -39,7 +39,7 @@ public Renderer(Board board, Player player)
             {
                 Position position = new Position(col, row);
                 Console.Write(GetSymbolAt(position));
-                Console.Write(' ');
+                //Console.Write(' ');
            }
             Console.Write("        |         ");
             RenderSidebar(row);
@@ -48,8 +48,7 @@ public Renderer(Board board, Player player)
 
     private char GetSymbolAt(Position position)
     {
-        if (_player.CurrentPosition.X == position.X &&
-            _player.CurrentPosition.Y == position.Y)
+        if (_player.CurrentPosition == position)
         {
             return _player.GetSymbol();
         }

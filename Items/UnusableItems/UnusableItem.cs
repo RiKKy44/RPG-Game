@@ -3,8 +3,8 @@ namespace OODProject;
 
 public abstract class UnusableItem : Item
 {
-    public override void OnPickUp(Player player)
+    public override bool IsEquipable()
     {
-        player.AddToInventory(this);
+        return false;
     }
 }
