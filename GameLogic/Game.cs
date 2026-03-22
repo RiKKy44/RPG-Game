@@ -2,7 +2,7 @@ using System.Net.Mime;
 using System.Runtime.Versioning;
 using OODProject.Actions;
 using OODProject.Entities;
-
+using OODProject.Dungeon;
 namespace OODProject;
 
 public class Game
@@ -14,7 +14,7 @@ public class Game
     private IDictionary<ConsoleKey, IAction> actions;
     public Game()
     {
-        Board board = new LevelLoader().Load();
+        Board board = new DungeonBuilder().StartFilled().Apply(new DungeonLayouts()).Build();
         Player player = new Player( position: new Position(1, 1)); 
         _state = new GameState(player, board);
         _renderer = new Renderer(_state);

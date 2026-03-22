@@ -15,10 +15,12 @@ public class AddItemsProc : IBuildingBlock
     private readonly List<Func<Item>> _itemFactories = new()
     {
         () => new Rock(),
-        () => new HealingPlus()
+        () => new HealingPlus(),
+        () => new Gold(),
+        () => new Coin()
     };
 
-    public AddItemsProc(int count = 10)
+    public AddItemsProc(int count = 20)
     {
         _count = count;
     }

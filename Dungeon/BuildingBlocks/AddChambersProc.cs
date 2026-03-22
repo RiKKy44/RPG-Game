@@ -16,7 +16,7 @@ public class AddChambersProc : IBuildingBlock
 
     private Random _random = new Random();
 
-    public AddChambersProc(int count = 2, int minSize = 3, int maxSize = 6)
+    public AddChambersProc(int count = 10, int minSize = 8, int maxSize = 10)
     {
         _count = count;
         _minSize = minSize;

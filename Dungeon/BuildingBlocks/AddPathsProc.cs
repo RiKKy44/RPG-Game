@@ -66,7 +66,7 @@ public class AddPathsProc : IBuildingBlock
             
             var neighbors = GetUnvisitedNeighbors(current, visited);
 
-            if (neighbors != null) {
+            if (neighbors.Count >0) {
                 Position next = neighbors[_random.Next(neighbors.Count)];
                 ClearWallBetween(board, current, next);
 
