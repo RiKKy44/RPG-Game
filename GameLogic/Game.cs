@@ -27,8 +27,8 @@ public class Game
             [ConsoleKey.H] = new UnequipAction(),
             [ConsoleKey.F] = new EquipAction(HandSlot.Left),
             [ConsoleKey.G] = new EquipAction(HandSlot.Right),
-            [ConsoleKey.UpArrow] = new InventoryScrollAction(1),
-            [ConsoleKey.DownArrow] = new InventoryScrollAction(-1),
+            [ConsoleKey.UpArrow] = new InventoryScrollAction(-1),
+            [ConsoleKey.DownArrow] = new InventoryScrollAction(1),
             [ConsoleKey.W] = new MoveAction(Direction.Up),
             [ConsoleKey.S] = new MoveAction(Direction.Down),
             [ConsoleKey.A] = new MoveAction(Direction.Left),
@@ -39,10 +39,13 @@ public class Game
     {       
         ConsoleKey key = Console.ReadKey(true).Key;
 
-        if (actions.ContainsKey(key))
+        if (actions.TryGetValue(key, out var action))
         {
-            actions.TryGetValue(key, out var action);
             action.Execute(_state);
+        }
+        else
+        {
+            _state.Message = "Unknown key";
         }
         
 
