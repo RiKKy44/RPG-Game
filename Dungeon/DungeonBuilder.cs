@@ -24,7 +24,8 @@ public class DungeonBuilder
 
     public DungeonBuilder StartFilled()
     {
-        Apply(new FilledWithWallsProc());
+        _board = new Board();
+        new FilledWithWallsProc().Apply(_board);
         _initialized = true;
         return this;
     }
