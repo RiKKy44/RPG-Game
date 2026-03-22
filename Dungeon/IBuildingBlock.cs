@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OODProject.GameLogic;
+namespace OODProject.Dungeon;
 
 public interface IBuildingBlock {
     void Apply(Board board);

@@ -7,6 +7,14 @@ public record struct Position(int X, int Y)
         return new Position(a.X + b.X, a.Y + b.Y);
     }
 
+    public static Position operator *(int x, Position a)
+    {
+        return new Position(a.X * x, a.Y * x);
+    }
+    public static Position operator *(Position a, int x)
+    {
+        return new Position(a.X * x, a.Y * x);
+    }
 }
 
 public static class Direction
