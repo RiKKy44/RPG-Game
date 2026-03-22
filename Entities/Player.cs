@@ -110,7 +110,7 @@ public class Player : Entity
         return "Player";
     }
     public void PickUpItem(Item item)
-    {
+    { 
         item.OnPickUp(this);
     }
     public Item DropItem(Item item)
