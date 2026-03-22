@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OODProject.Dungeon.BuildingBlocks;
 
-public class AddChambersProc
+public class AddChambersProc : IBuildingBlock
 {
     private readonly int _count;
 
