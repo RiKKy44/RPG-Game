@@ -1,36 +1,37 @@
-﻿using OODProject.Items.Weapons.Modifiers;
+﻿using System;
 
 namespace OODProject;
 
 public abstract class Weapon : Item
 {
-    private int _baseDamage;
-    private int _baseWeight;
-
-    private List<IWeaponModifier> _modifiers = new List<IWeaponModifier>();
-
-    public int Damage
-    {
-        get { return _baseDamage + _modifiers.Sum(m => m.DamageBonus); }
-        protected set
-        {
-            if (value < 0) throw new ArgumentOutOfRangeException("Damage cannot be less than 0");
-            _baseDamage = value;
-        }
-    }
+    private int _damage;
+    private int _weight;
 
     public int Weight
     {
-        get { 
-            return _baseWeight + _modifiers.Sum(m => m.WeightBonus); 
-        }
+        get { return _weight; }
         protected set
         {
-            if (value < 0) throw new ArgumentOutOfRangeException("Weight cannot be less than 0");
-            _baseWeight = value;
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException("Weight cannot be less than 0");
+            }
+            _weight = value;
         }
     }
-    public abstract string BaseName { get; }
+
+    public int Damage
+    {
+        get { return _damage; }
+        protected set
+        {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException("Damage cannot be less than 0");
+            }
+            _damage = value;
+        }
+    }
 
     public Weapon(int damage, int weight)
     {
@@ -38,19 +39,23 @@ public abstract class Weapon : Item
         Weight = weight;
     }
 
-    public void AddModifier(IWeaponModifier modifier)
+    public override char GetSymbol()
     {
-        _modifiers.Add(modifier);
+        return Symbols.Weapon;
     }
 
-    public override string GetName()
+    public override bool IsEquipable()
     {
-        string prefixes = string.Join("", _modifiers.Select(m => m.NamePrefix));
-        return $"{prefixes}{BaseName}";
+        return true;
     }
 
-    public override char GetSymbol() => Symbols.Weapon;
-    public override bool IsEquipable() => true;
-    public override int GetDamage() => Damage; 
-    public override int GetWeight() => Weight; 
+    public override int GetDamage()
+    {
+        return _damage;
+    }
+
+    public override int GetWeight()
+    {
+        return _weight;
+    }
 }

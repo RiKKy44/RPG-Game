@@ -18,4 +18,5 @@ public class GreatAxe : DoubleHanded
     }
 
     public GreatAxe(int damage = 60, int weight = 45) : base(damage, weight) { }
+
 }
