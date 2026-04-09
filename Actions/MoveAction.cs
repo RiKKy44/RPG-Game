@@ -12,9 +12,17 @@ public class MoveAction : IAction
     public MoveAction(Position direction)
     {
         _direction = direction;
+
+        Description = direction switch
+        {
+            _ when direction == Direction.Up => "Move up",
+            _ when direction == Direction.Down => "Move down",
+            _ when direction == Direction.Left => "Move left",
+            _ when direction == Direction.Right => "Move right",
+        };
     }
 
-    public string Description => "Press WSAD to move your character";
+    public string Description { get; init; }
 
     public void Execute(GameState state)
     {

@@ -69,7 +69,7 @@ public class Renderer
             _ when row == currencyStart => "---- CURRENCY ----",
             _ when row == currencyStart + 1 => $"Coins: {_state.Player.CoinCount}",
             _ when row == currencyStart + 2 => $"Gold:  {_state.Player.GoldCount}",
-            _ when row == currencyStart + 4 => GetStandingOnInfo(),
+            _ when row >= currencyStart + 3 => GetControlsInfo(row - (currencyStart + 3)),
             _ => ""
         };
     }
@@ -89,11 +89,13 @@ public class Renderer
         return $"{item.GetSymbol()} {item.GetName()}";
     }
 
-    private string GetStandingOnInfo()
+    private string GetControlsInfo(int index)
     {
-        Field field = _state.Board.GetField(_state.Player.CurrentPosition);
-        if (field.Items.Count == 0) return "";
-        Item item = field.Items[0];
-        return $"[E] Pick up: {item.GetSymbol()}";
+        var controls = _state.ActionDescriptions.ToList();
+        if(index >=0 && index < controls.Count)
+        {
+            return controls[index];
+        }
+        return "";
     }
 }

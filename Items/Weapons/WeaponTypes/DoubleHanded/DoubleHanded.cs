@@ -4,7 +4,7 @@ namespace OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
 
 public abstract class DoubleHanded : Weapon
 {
-    public DoubleHanded(int damage, int weight) : base(damage, weight){}
+    public DoubleHanded(int damage, int weight) : base(damage, weight) { }
 
     public override bool IsTwoHanded()
     {

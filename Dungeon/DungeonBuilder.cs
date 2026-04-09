@@ -1,4 +1,5 @@
 ﻿using OODProject.Dungeon.BuildingBlocks;
+using OODProject.Dungeon.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,14 +31,14 @@ public class DungeonBuilder
         return this;
     }
 
-    public DungeonBuilder Apply(IBuildingBlock buildingBlock)
+    public DungeonBuilder Apply(IDungeonLayout dungeonLayout)
     {
         if (!_initialized)
         {
             throw new InvalidOperationException("Must call StartEmpty or StartFilled");
         }
 
-        buildingBlock.Apply(_board);
+        dungeonLayout.Apply(_board);
         return this;
     }
 

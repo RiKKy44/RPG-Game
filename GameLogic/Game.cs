@@ -3,6 +3,7 @@ using System.Runtime.Versioning;
 using OODProject.Actions;
 using OODProject.Entities;
 using OODProject.Dungeon;
+using OODProject.Dungeon.Layouts;
 namespace OODProject;
 
 public class Game
@@ -14,26 +15,21 @@ public class Game
     private IDictionary<ConsoleKey, IAction> actions;
     public Game()
     {
-        Board board = new DungeonBuilder().StartFilled().Apply(new DungeonLayouts()).Build();
+        var layout = new DungeonLayouts();
+        Board board = new DungeonBuilder().StartFilled().Apply(layout).Build();
         Player player = new Player( position: new Position(1, 1)); 
         _state = new GameState(player, board);
         _renderer = new Renderer(_state);
         _running = true;
-        actions = new Dictionary<ConsoleKey, IAction>
+        actions = new Dictionary<ConsoleKey, IAction>();
+        foreach (var (key,action) in layout.GetActions())
         {
-            [ConsoleKey.E] = new PickupAction(),
-            [ConsoleKey.Escape] = new ExitAction(),
-            [ConsoleKey.Q] = new DropAction(),
-            [ConsoleKey.H] = new UnequipAction(),
-            [ConsoleKey.F] = new EquipAction(HandSlot.Left),
-            [ConsoleKey.G] = new EquipAction(HandSlot.Right),
-            [ConsoleKey.UpArrow] = new InventoryScrollAction(-1),
-            [ConsoleKey.DownArrow] = new InventoryScrollAction(1),
-            [ConsoleKey.W] = new MoveAction(Direction.Up),
-            [ConsoleKey.S] = new MoveAction(Direction.Down),
-            [ConsoleKey.A] = new MoveAction(Direction.Left),
-            [ConsoleKey.D] = new MoveAction(Direction.Right),
-        };
+            actions[key] = action;
+        }
+        _state.ActionDescriptions = actions
+            .Select(kvp => $"[{kvp.Key}] - {kvp.Value.Description}")
+            .Distinct()
+            .ToList();
     }
     private void HandleInput()
     {       

@@ -1,4 +1,5 @@
-﻿using OODProject.Entities;
+﻿using OODProject.Dungeon.Layouts;
+using OODProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ public class GameState
 {
     public Player Player { get; }
     public Board Board { get;  }
+    public IEnumerable<string> ActionDescriptions;
     public string Message { get; set; } = "";
 
     private int _inventoryPointer;

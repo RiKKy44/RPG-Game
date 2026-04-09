@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace OODProject.Actions;
 
-public class EquipAction :IAction
+public class EquipLeftHand :IAction
 {
-    private HandSlot _slot; 
-    public EquipAction(HandSlot slot)
-    {
-        _slot = slot;
-    }
-
 
     public void Execute(GameState state)
     {
@@ -23,11 +17,11 @@ public class EquipAction :IAction
             Item item = state.Player.Inventory[state.InventoryPointer];
             if (item.IsEquipable())
             {
-                state.Player.Equip(item, _slot);
+                state.Player.Equip(item, HandSlot.Left);
             }
         }
     }
 
-    public string Description => "F - Equip left hand, G - right hand";
+    public string Description => "Equip left hand";
 }
 

@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OODProject.Dungeon;
+namespace OODProject.Dungeon.Layouts;
 
-public interface IBuildingBlock {
-    void Apply(Board board);
+public interface IDungeonLayout : IBuildingBlock
+{
+    IEnumerable<(ConsoleKey, IAction)> GetActions();
 }
-
-

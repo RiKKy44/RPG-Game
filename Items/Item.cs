@@ -10,15 +10,14 @@ public abstract class Item : IDrawable
     {
         return false;
     }
-    public virtual int GetDamage()
-    {
-        return 0;
-    }
-
     public virtual int GetWeight()
     {
         return 0;
     }
 
+    public virtual int GetDamage()
+    {
+        return 0;
+    }
     public abstract void OnPickUp(Player player);
 }
