@@ -12,7 +12,7 @@ public class InventoryScrollAction : IAction
 {
     private int _change;
 
-    public string Description => "↑↓ - Navigate inventory";
+    public string Description => "Navigate inventory";
 
     public InventoryScrollAction(int change)
     {

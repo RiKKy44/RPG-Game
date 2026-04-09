@@ -19,7 +19,7 @@ public class Renderer
     public void Render()
     {
         Console.SetCursorPosition(0, 0);
-
+        
         if (_state.CurrentView == ViewMode.Map)
         {
             RenderMapScreen();

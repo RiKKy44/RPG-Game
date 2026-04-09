@@ -1,4 +1,5 @@
-﻿using OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
+﻿using OODProject.Items.Modifiers;
+using OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
 using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,14 @@ public class AddWeaponsProc : IBuildingBlock
         () => new GreatSword()
     };
 
+
+    private readonly List<Func<Item, Item>> _modifierFactories = new()
+    {
+        (baseItem) => new StrongDecorator(baseItem),
+        (baseItem) => new UnluckyDecorator(baseItem),
+        (baseItem) => new SmartDecorator(baseItem)
+    };
+
     public AddWeaponsProc(int count = 5)
     {
         _count = count;
@@ -40,7 +49,10 @@ public class AddWeaponsProc : IBuildingBlock
         {
             int index = _random.Next(emptyFields.Count);
             Field field = emptyFields[index];
+
             Item item = _weaponFactories[_random.Next(_weaponFactories.Count)]();
+
+            item = _modifierFactories[_random.Next(_weaponFactories.Count)](item);
 
             field.AddItem(item);
 
