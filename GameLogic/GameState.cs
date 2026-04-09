@@ -8,11 +8,22 @@ using System.Threading.Tasks;
 
 namespace OODProject;
 
+
+
+public enum ViewMode
+{
+    Map,
+    Inventory
+}
+
 public class GameState
 {
     public Player Player { get; }
     public Board Board { get;  }
+
     public IEnumerable<string> ActionDescriptions;
+
+    public ViewMode CurrentView { get; set; } = ViewMode.Map;
     public string Message { get; set; } = "";
 
     private int _inventoryPointer;

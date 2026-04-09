@@ -13,7 +13,9 @@ public class DungeonLayouts : IDungeonLayout
     public void Apply(Board board)
     {
         new AddPathsProc().Apply(board);
+
         new AddCentralRoomProc().Apply(board);
+
         new AddChambersProc().Apply(board);
 
         new AddWeaponsProc().Apply(board);
@@ -37,5 +39,6 @@ public class DungeonLayouts : IDungeonLayout
         yield return (ConsoleKey.UpArrow, new InventoryScrollAction(-1));
         yield return (ConsoleKey.DownArrow, new InventoryScrollAction(1));
         yield return (ConsoleKey.H, new UnequipAction());
+        yield return (ConsoleKey.I, new ToggleInventoryAction());
     }
 }
