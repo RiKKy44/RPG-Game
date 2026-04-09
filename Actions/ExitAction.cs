@@ -16,5 +16,5 @@ public class ExitAction : IAction
         OnExit?.Invoke();
     }
 
-    public string Description => "Escape - Exit game";
+    public string Description => " Exit game";
 }

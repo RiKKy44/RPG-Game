@@ -17,5 +17,5 @@ public class UnequipAction : IAction
         state.Player.Unequip(HandSlot.Right);
     }
 
-    public string Description => "H - Unequip hands";
+    public string Description => "Unequip hands";
 }

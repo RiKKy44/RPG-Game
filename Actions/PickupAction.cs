@@ -23,6 +23,6 @@ public class PickupAction : IAction
             field.RemoveItem(item);
         }
     }
-    public string Description => "E - Pick up item";
+    public string Description => "Pick up item";
 
 }

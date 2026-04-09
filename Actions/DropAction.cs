@@ -20,5 +20,5 @@ public class DropAction : IAction
         }
     }
 
-    public string Description => "Q - Drop item";
+    public string Description => "Drop item";
 }
