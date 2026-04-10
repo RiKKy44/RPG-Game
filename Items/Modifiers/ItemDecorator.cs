@@ -1,4 +1,5 @@
-﻿using OODProject.Entities;
+﻿using OODProject.Combat;
+using OODProject.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,11 @@ public abstract class ItemDecorator : Item
     {
         _innerItem = innerItem;
     }
+
+    public override void Accept(IAttackMethod visitor) => _innerItem.Accept(visitor);
     public override char GetSymbol() => _innerItem.GetSymbol();
     public override bool IsEquipable() => _innerItem.IsEquipable();
     public override bool IsTwoHanded() => _innerItem.IsTwoHanded();
-    public override void OnPickUp(Player player) => _innerItem.OnPickUp(player);
     public override string GetName() => _innerItem.GetName();
     public override int GetDamage() => _innerItem.GetDamage();
     public override int GetDefenseBonus() => _innerItem.GetDefenseBonus();

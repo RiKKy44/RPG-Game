@@ -16,11 +16,6 @@ public abstract class SingleHanded : Weapon
     public SingleHanded(int damage, int weight) : base(damage, weight) {
     }
 
-    public override void OnPickUp(Player player)
-    {
-        player.AddToInventory(this);
-    }
-
     public override char GetSymbol()
     {
         return Symbols.SingleHanded;

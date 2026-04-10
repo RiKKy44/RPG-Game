@@ -52,7 +52,7 @@ public class AddWeaponsProc : IBuildingBlock
 
             Item item = _weaponFactories[_random.Next(_weaponFactories.Count)]();
 
-            item = _modifierFactories[_random.Next(_weaponFactories.Count)](item);
+            item = _modifierFactories[_random.Next(_modifierFactories.Count)](item);
 
             field.AddItem(item);
 

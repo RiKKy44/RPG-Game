@@ -18,9 +18,4 @@ public class Rock : UnusableItem
     {
         return Symbols.Rock;
     }
-
-    public override void OnPickUp(Player player)
-    {
-        player.AddToInventory(this);
-    }
 }

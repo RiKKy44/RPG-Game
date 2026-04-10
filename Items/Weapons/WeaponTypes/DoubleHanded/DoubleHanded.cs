@@ -11,11 +11,6 @@ public abstract class DoubleHanded : Weapon
         return true;
     }
 
-    public override void OnPickUp(Player player)
-    {
-        player.AddToInventory(this);
-    }
-
     public override char GetSymbol()
     {
         return Symbols.DoubleHanded;
