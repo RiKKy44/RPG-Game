@@ -49,6 +49,10 @@ public class Renderer
 
             Console.Write(line.PadRight(TotalConsoleWidth));
         }
+        Console.SetCursorPosition(0, GameConfig.Height + 1);
+        Console.Write("Last Action: ".PadRight(TotalConsoleWidth));
+        Console.SetCursorPosition(0, GameConfig.Height + 2);
+        Console.Write(_state.Message.PadRight(TotalConsoleWidth));
     }
 
     private string GetMapSidebarContent(int row, List<string> controls)
@@ -114,6 +118,10 @@ public class Renderer
         if (_state.Player.CurrentPosition == position)
             return _state.Player.GetSymbol();
 
+        var enemy = _state.Enemies.FirstOrDefault(e => e.CurrentPosition == position);
+        if (enemy != null)
+            return enemy.GetSymbol();
+
         Field field = _state.Board.GetField(position);
         if (field.Items.Count > 0)
             return field.Items[0].GetSymbol();
@@ -135,4 +143,6 @@ public class Renderer
         if (item == null) return "empty";
         return $"{item.GetSymbol()} {item.GetName()}";
     }
+
+   
 }

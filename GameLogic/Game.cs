@@ -10,8 +10,6 @@ public class Game
 {
     private Renderer _renderer;
 
-    private bool _running;
-
     private GameState _state;
 
     private IDictionary<ConsoleKey, IAction> actions;
@@ -26,8 +24,6 @@ public class Game
         _state = new GameState(player, board);
 
         _renderer = new Renderer(_state);
-
-        _running = true;
 
         actions = new Dictionary<ConsoleKey, IAction>();
 
@@ -64,9 +60,9 @@ public class Game
 
         var exitAction = new ExitAction();
 
-        exitAction.OnExit += () => _running = false;
+        exitAction.OnExit += () => _state.IsRunning = false;
 
-        while (_running)
+        while (_state.IsRunning)
         {
             _renderer.Render();
             HandleInput();

@@ -13,6 +13,12 @@ public class MagicalAttack : IAttackMethod
     private Entity _attacker;
     public int CalculatedDefense { get; private set; }
     public int CalculatedDamage { get; private set; }
+
+
+    public MagicalAttack(Entity attacker)
+    {
+        _attacker = attacker;
+    }
     public void Visit(LightWeapon weapon)
     {
         CalculatedDamage = 1;

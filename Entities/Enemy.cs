@@ -16,7 +16,6 @@ public class Enemy : Entity
     public int Armor { get; private set; }
 
     public Enemy(Position position, string name, char symbol, int health, int attackValue, int armor)
-        // Dziedziczy z bazy, wpisujemy domyślne statystyki (wróg polega głównie na AttackValue)
         : base(position, strength: 5, dexterity: 5, health: health, luck: 0, aggression: 10, wisdom: 0, maxHealh: health)
     {
         _name = name;

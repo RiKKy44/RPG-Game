@@ -21,4 +21,6 @@ public static class Symbols
     public const char Rock = 'o';
 
     public const char Heal = '+';
+
+    public const char Enemy = 'Ψ';
 }

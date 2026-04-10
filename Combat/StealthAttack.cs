@@ -14,6 +14,11 @@ public class StealthAttack : IAttackMethod
     public int CalculatedDamage { get; private set; }
 
     public int CalculatedDefense { get; private set; }
+
+    public StealthAttack(Entity attacker)
+    {
+        _attacker = attacker;
+    }
     public void Visit(LightWeapon weapon)
     {
         CalculatedDamage = weapon.GetDamage()*2;
