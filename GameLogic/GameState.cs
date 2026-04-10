@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 namespace OODProject;
 
 
-
+public enum AttackStyle { 
+    Normal, 
+    Stealth, 
+    Magical 
+}
 public enum ViewMode
 {
     Map,

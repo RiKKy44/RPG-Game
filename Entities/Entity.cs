@@ -167,4 +167,9 @@ public abstract class Entity : IDrawable
     {
         CurrentPosition = newPosition;
     }
+    public virtual void TakeDamage(int amount)
+    {
+        Health -= amount;
+        if (Health < 0) Health = 0;
+    }
 }
