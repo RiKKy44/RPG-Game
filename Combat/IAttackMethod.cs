@@ -9,6 +9,8 @@ namespace OODProject.Combat;
 
 public interface IAttackMethod
 {
+    int CalculatedDamage { get; }
+    int CalculatedDefense { get; }
     void Visit(LightWeapon weapon);
     void Visit(HeavyWeapon weapon);
     void Visit(MagicalWeapon weapon);
