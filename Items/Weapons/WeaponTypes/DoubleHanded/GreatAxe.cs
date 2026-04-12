@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
 
-public class GreatAxe : DoubleHanded
+public class GreatAxe : HeavyWeapon
 {
     public override string GetName()
     {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OODProject.Items.Weapons.Categories;
 namespace OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 
 
 
-public class Dagger : SingleHanded
+public class Dagger : LightWeapon
 {
     public override string GetName()
     {

@@ -41,7 +41,14 @@ public abstract class Weapon : Item
 
     public override char GetSymbol()
     {
-        return Symbols.Weapon;
+        if (this.IsTwoHanded())
+        {
+            return Symbols.DoubleHanded;
+        }
+        else
+        {
+            return Symbols.SingleHanded;
+        }
     }
 
     public override bool IsEquipable()
