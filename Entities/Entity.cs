@@ -53,10 +53,6 @@ public abstract class Entity : IDrawable
         get { return _health; }
         protected set
         {
-            if (value < 0)
-            {
-                throw new ArgumentOutOfRangeException($"Health cannot be less than 0");
-            }
             _health = value;
         }
     }

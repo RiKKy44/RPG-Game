@@ -17,7 +17,8 @@ public enum AttackStyle {
 public enum ViewMode
 {
     Map,
-    Inventory
+    Inventory,
+    Combat
 }
 
 public class GameState
@@ -30,6 +31,8 @@ public class GameState
     public AttackStyle CurrentAttack { get; set; } = AttackStyle.Normal;
     public ViewMode CurrentView { get; set; } = ViewMode.Map;
     public string Message { get; set; } = "";
+
+    public Enemy? CurrentEnemy { get; set; }
 
     private int _inventoryPointer;
     public int InventoryPointer
@@ -51,5 +54,6 @@ public class GameState
         Player = player; 
         Board = board; 
         InventoryPointer = 0;
+        CurrentEnemy = null;
     }
 }

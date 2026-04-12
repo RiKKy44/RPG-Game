@@ -24,10 +24,8 @@ public class Renderer
         {
             RenderMapScreen();
         }
-        else
-        {
-            RenderInventoryScreen();
-        }
+        else if (_state.CurrentView == ViewMode.Inventory) RenderInventoryScreen();
+        else if (_state.CurrentView == ViewMode.Combat) RenderCombatScreen();
     }
     private void RenderMapScreen()
     {
@@ -144,5 +142,35 @@ public class Renderer
         return $"{item.GetSymbol()} {item.GetName()}";
     }
 
-   
+
+
+    private void RenderCombatScreen()
+    {
+        var player = _state.Player;
+        var enemy = _state.CurrentEnemy;
+
+        if (enemy == null) return;
+
+        for (int row = 0; row < GameConfig.Height; row++)
+        {
+            Console.SetCursorPosition(0, row);
+            string line = "";
+
+            if (row == 2) line = "====FIGHT MODE====";
+            else if (row == 5) line = $"[YOU]".PadRight(30) + $"[ {enemy.GetName().ToUpper()} ]";
+            else if (row == 6) line = $"HP: {player.Health}/{player.MaxHealth}".PadRight(30) + $"HP: {enemy.Health}/{enemy.MaxHealth}";
+            else if (row == 7) line = $"Weapon: {GetHandDisplay(player.RightHand ?? player.LeftHand)}".PadRight(30) + $"Atak: {enemy.AttackValue} | Pancerz: {enemy.Armor}";
+
+            else if (row == 11) line = "Choose Attack: ";
+            else if (row == 13) line = "    [1] Normal Attack";
+            else if (row == 14) line = "    [2] Stealth Attack";
+            else if (row == 15) line = "    [3] Magical Attack";
+
+            else if (row == 18) line = "===FIGHT LOG===";
+            else if (row == 19) line = $"{_state.Message}";
+
+            Console.Write(line.PadRight(TotalConsoleWidth));
+        }
+    }
+
 }

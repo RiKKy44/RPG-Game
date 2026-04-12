@@ -42,6 +42,8 @@ public class DungeonLayouts : IDungeonLayout
         yield return (ConsoleKey.DownArrow, new InventoryScrollAction(1));
         yield return (ConsoleKey.H, new UnequipAction());
         yield return (ConsoleKey.I, new ToggleInventoryAction());
-        yield return (ConsoleKey.T, new ToggleAttackAction());
+        yield return (ConsoleKey.D1, new CombatAction(AttackStyle.Normal));
+        yield return (ConsoleKey.D2, new CombatAction(AttackStyle.Stealth));
+        yield return (ConsoleKey.D3, new CombatAction(AttackStyle.Magical));
     }
 }

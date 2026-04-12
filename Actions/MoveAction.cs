@@ -32,45 +32,9 @@ public class MoveAction : IAction
         var enemy = state.Board.Enemies.FirstOrDefault(e => e.CurrentPosition == newPosition);
 
         if (enemy != null) {
-            IAttackMethod attackVisitor = state.CurrentAttack switch
-            {
-                AttackStyle.Stealth => new StealthAttack(state.Player),
-                AttackStyle.Magical => new MagicalAttack(state.Player),
-                _ => new NormalAttack(state.Player)
-            };
-
-
-            Item? weapon = state.Player.RightHand ?? state.Player.LeftHand;
-            if (weapon != null)
-            {
-                weapon.Accept(attackVisitor);
-            }
-            else
-            {
-                attackVisitor.Visit((Item)null!);
-            }
-
-            int damageToEnemy = Math.Max(0, attackVisitor.CalculatedDamage - enemy.Armor);
-            enemy.TakeDamage(damageToEnemy);
-            state.Message = $"YOU -> {enemy.GetName()}: -{damageToEnemy}";
-
-            if (enemy.Health <= 0) {
-                state.Message += $"You killed {enemy.GetName()}!";
-                state.Board.Enemies.Remove(enemy);
-                return;
-            }
-
-
-            int damageToPlayer = Math.Max(0, enemy.AttackValue - attackVisitor.CalculatedDefense);
-            state.Player.TakeDamage(damageToPlayer);
-            state.Message += $"{enemy.GetName()} -> You: -{damageToPlayer}HP.";
-
-
-            if (state.Player.Health <= 0)
-            {
-                state.Message = "YOU DIED! GAME OVER.";
-                state.IsRunning = false;
-            }
+            state.CurrentEnemy = enemy;
+            state.CurrentView = ViewMode.Combat;
+            state.Message = $"You entered the fight with {enemy.GetName()}!";
 
         }
         else if (state.Board.CanEnter(newPosition))
