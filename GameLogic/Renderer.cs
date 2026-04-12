@@ -118,7 +118,7 @@ public class Renderer
         if (_state.Player.CurrentPosition == position)
             return _state.Player.GetSymbol();
 
-        var enemy = _state.Enemies.FirstOrDefault(e => e.CurrentPosition == position);
+        var enemy = _state.Board.Enemies.FirstOrDefault(e => e.CurrentPosition == position);
         if (enemy != null)
             return enemy.GetSymbol();
 

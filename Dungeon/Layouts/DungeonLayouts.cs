@@ -21,6 +21,8 @@ public class DungeonLayouts : IDungeonLayout
         new AddWeaponsProc().Apply(board);
 
         new AddItemsProc().Apply(board);
+
+        new AddEnemiesProc().Apply(board);
     }
 
 

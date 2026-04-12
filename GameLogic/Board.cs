@@ -1,10 +1,12 @@
+using OODProject.Entities;
+
 namespace OODProject;
 
 public class Board
 {
 
     private Field[,] _fields;
-    
+    public List<Enemy> Enemies { get; } = new List<Enemy>();
     public Board()
     {
         _fields = new Field[GameConfig.Width, GameConfig.Height];

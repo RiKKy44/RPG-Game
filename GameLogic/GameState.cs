@@ -26,8 +26,6 @@ public class GameState
     public Board Board { get;  }
 
     public IEnumerable<string> ActionDescriptions;
-
-    public List<Enemy> Enemies { get; } = new List<Enemy>();
     public bool IsRunning { get; set; } = true;
     public AttackStyle CurrentAttack { get; set; } = AttackStyle.Normal;
     public ViewMode CurrentView { get; set; } = ViewMode.Map;

@@ -1,3 +1,5 @@
+using OODProject.Combat;
+
 namespace OODProject;
 
 public abstract class Currency : Item
@@ -19,5 +21,5 @@ public abstract class Currency : Item
     {
         return false;
     }
-    
+
 }

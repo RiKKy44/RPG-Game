@@ -29,7 +29,7 @@ public class MoveAction : IAction
     {
         Position newPosition = state.Player.CurrentPosition + _direction;
 
-        var enemy = state.Enemies.FirstOrDefault(e => e.CurrentPosition == newPosition);
+        var enemy = state.Board.Enemies.FirstOrDefault(e => e.CurrentPosition == newPosition);
 
         if (enemy != null) {
             IAttackMethod attackVisitor = state.CurrentAttack switch
@@ -56,7 +56,7 @@ public class MoveAction : IAction
 
             if (enemy.Health <= 0) {
                 state.Message += $"You killed {enemy.GetName()}!";
-                state.Enemies.Remove(enemy);
+                state.Board.Enemies.Remove(enemy);
                 return;
             }
 
