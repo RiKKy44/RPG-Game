@@ -32,8 +32,8 @@ public class CombatAction : IAction
         };
 
         Item? weapon = player.RightHand ?? player.LeftHand;
-        if (weapon != null) weapon.Accept(attackVisitor);
-        else attackVisitor.Visit((Item)null!);
+        if (weapon != null) weapon.Accept(attackVisitor, weapon);
+        else attackVisitor.Visit((Item)null!, (Item)null!);
 
         int dmgToEnemy = Math.Max(0, attackVisitor.CalculatedDamage - enemy.Armor);
         enemy.TakeDamage(dmgToEnemy);

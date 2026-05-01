@@ -12,13 +12,12 @@ namespace OODProject.Items.Modifiers;
 public abstract class ItemDecorator : Item
 {
     protected Item _innerItem;
-
     public ItemDecorator(Item innerItem)
     {
         _innerItem = innerItem;
     }
 
-    public override void Accept(IAttackMethod visitor) => _innerItem.Accept(visitor);
+    public override void Accept(IAttackMethod visitor, Item? decorator = null) => _innerItem.Accept(visitor, this);
     public override char GetSymbol() => _innerItem.GetSymbol();
     public override bool IsEquipable() => _innerItem.IsEquipable();
     public override bool IsTwoHanded() => _innerItem.IsTwoHanded();

@@ -20,5 +20,5 @@ public class Gold : Currency
     {
         return "Gold";
     }
-    public override void Accept(IAttackMethod visitor) => visitor.Visit(this);
+    public override void Accept(IAttackMethod visitor, Item? decorator = null) => visitor.Visit(this, decorator ?? this);
 }

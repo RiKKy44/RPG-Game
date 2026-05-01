@@ -19,25 +19,25 @@ public class StealthAttack : IAttackMethod
     {
         _attacker = attacker;
     }
-    public void Visit(LightWeapon weapon)
+    public void Visit(LightWeapon weapon, Item decorator)
     {
         CalculatedDamage = weapon.GetDamage()*2;
 
-        CalculatedDefense = _attacker.Dexterity + weapon.GetDefenseBonus();
+        CalculatedDefense = _attacker.Dexterity + decorator.GetDefenseBonus();
     }
-    public void Visit(HeavyWeapon weapon)
+    public void Visit(HeavyWeapon weapon, Item decorator)
     {
         CalculatedDamage = weapon.GetDamage()/2;
 
-        CalculatedDefense = _attacker.Strength + weapon.GetDefenseBonus();
+        CalculatedDefense = _attacker.Strength + decorator.GetDefenseBonus();
     }
-    public void Visit(MagicalWeapon weapon)
+    public void Visit(MagicalWeapon weapon, Item decorator)
     {
         CalculatedDamage = 1;
 
         CalculatedDefense = 0;
     }
-    public void Visit(Item item)
+    public void Visit(Item item, Item decorator)
     {
         CalculatedDamage = 1;
 

@@ -7,10 +7,14 @@ public class Player : Entity
     private List<Item> _inventory;
 
     private int _goldCount;
-
+    
+    private string _name;
+    
     private int _coinCount;
     public int GoldCount => _goldCount;
     public int CoinCount => _coinCount;
+    
+    public string Name => _name;
     public IReadOnlyList<Item> Inventory => _inventory;
 
     public int InventorySize

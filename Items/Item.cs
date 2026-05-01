@@ -8,7 +8,11 @@ public abstract class Item : IDrawable
     public abstract char GetSymbol();
     public abstract string GetName();
     public abstract bool IsEquipable();
-    public abstract void Accept(IAttackMethod visitor);
+
+    public virtual void Accept(IAttackMethod visitor, Item decorator = null)
+    {
+    }
+
     public virtual void OnPickUp(Player player)
     {
         player.AddToInventory(this);

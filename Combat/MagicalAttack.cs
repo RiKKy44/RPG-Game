@@ -19,25 +19,25 @@ public class MagicalAttack : IAttackMethod
     {
         _attacker = attacker;
     }
-    public void Visit(LightWeapon weapon)
+    public void Visit(LightWeapon weapon, Item decorator)
     {
         CalculatedDamage = 1;
 
-        CalculatedDefense = _attacker.Luck + weapon.GetDefenseBonus();
+        CalculatedDefense = _attacker.Luck + decorator.GetDefenseBonus();
     }
-    public void Visit(HeavyWeapon weapon)
+    public void Visit(HeavyWeapon weapon, Item decorator)
     {
         CalculatedDamage = 1;
 
-        CalculatedDefense = _attacker.Luck + weapon.GetDefenseBonus();
+        CalculatedDefense = _attacker.Luck + decorator.GetDefenseBonus();
     }
-    public void Visit(MagicalWeapon weapon)
+    public void Visit(MagicalWeapon weapon, Item decorator)
     {
         CalculatedDamage = weapon.GetDamage();
 
-        CalculatedDefense = _attacker.Wisdom *2 + weapon.GetDefenseBonus();
+        CalculatedDefense = _attacker.Wisdom *2 + decorator.GetDefenseBonus();
     }
-    public void Visit(Item item)
+    public void Visit(Item item, Item decorator)
     {
         CalculatedDamage = 1;
 

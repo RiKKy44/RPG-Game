@@ -11,8 +11,8 @@ public interface IAttackMethod
 {
     int CalculatedDamage { get; }
     int CalculatedDefense { get; }
-    void Visit(LightWeapon weapon);
-    void Visit(HeavyWeapon weapon);
-    void Visit(MagicalWeapon weapon);
-    void Visit(Item item);
+    void Visit(LightWeapon weapon, Item decorator);
+    void Visit(HeavyWeapon weapon, Item decorator);
+    void Visit(MagicalWeapon weapon, Item decorator);
+    void Visit(Item item, Item decorator);
 }

@@ -11,5 +11,5 @@ namespace OODProject.Items.Weapons.Categories;
 public abstract class LightWeapon : Weapon
 {
     public LightWeapon(int damage, int weight) : base(damage, weight) { }
-    public override void Accept(IAttackMethod visitor) => visitor.Visit(this);
+    public override void Accept(IAttackMethod visitor, Item? decorator = null) => visitor.Visit(this, decorator ?? this);
 }
