@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProject.Logs;
 
 namespace OODProject.Actions;
 
@@ -21,6 +22,7 @@ public class PickupAction : IAction
             Item item = field.Items[0];
             player.PickUpItem(item);
             field.RemoveItem(item);
+            GameLogger.Instance.Log($"Player picked up: {item.GetName()}");
         }
     }
     public string Description => "Pick up item";

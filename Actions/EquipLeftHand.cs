@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProject.Logs;
+
 
 namespace OODProject.Actions;
 
@@ -18,6 +20,8 @@ public class EquipLeftHand :IAction
             if (item.IsEquipable())
             {
                 state.Player.Equip(item, HandSlot.Left);
+                GameLogger.Instance.Log($"Player equipped left hand with {item.GetName()}");
+
             }
         }
     }

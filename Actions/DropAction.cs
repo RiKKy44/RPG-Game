@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProject.Logs;
 
 namespace OODProject.Actions;
 
@@ -17,6 +18,7 @@ public class DropAction : IAction
         {
             Item item = player.DropItem(state.InventoryPointer);
             board.GetField(player.CurrentPosition).AddItem(item);
+            GameLogger.Instance.Log($"Player dropped {item.GetName} from {board.GetField(player.CurrentPosition)}");
         }
     }
 

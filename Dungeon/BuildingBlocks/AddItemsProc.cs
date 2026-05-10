@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OODProject.Dungeon.Themes;
 namespace OODProject.Dungeon.BuildingBlocks;
 
 public class AddItemsProc : IBuildingBlock
 {
+    private readonly IDungeonTheme _theme;
     private readonly int _count;
     private Random _random = new Random();
 
@@ -20,9 +21,10 @@ public class AddItemsProc : IBuildingBlock
         () => new Coin()
     };
 
-    public AddItemsProc(int count = 20)
+    public AddItemsProc(IDungeonTheme theme, int count = 20)
     {
         _count = count;
+        _theme = theme;
     }
 
 
@@ -39,7 +41,7 @@ public class AddItemsProc : IBuildingBlock
 
             Field field = emptyFields[index];
 
-            Item item = _itemFactories[_random.Next(_itemFactories.Count)]();
+            Item item = _theme.CreateRandomItem();
 
             field.AddItem(item);
 

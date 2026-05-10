@@ -28,7 +28,7 @@ public class Program
         }
         
         GameLogger.Instance.SetStrategy(new FileLogStrategy(config.LogPath, config.PlayerName));
-        Game game = new Game();
+        Game game = new Game(config);
         game.Run();
     }
 }

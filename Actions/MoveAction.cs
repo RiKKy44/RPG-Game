@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProject.Logs;
 
 namespace OODProject.Actions;
 
@@ -41,6 +42,10 @@ public class MoveAction : IAction
         {
             state.Player.MoveTo(newPosition);
             state.Message = "";
+        } 
+        else if (!state.Board.CanEnter(newPosition))
+        {
+            GameLogger.Instance.Log($"Player tried to enter the wall");
         }
     }
 }

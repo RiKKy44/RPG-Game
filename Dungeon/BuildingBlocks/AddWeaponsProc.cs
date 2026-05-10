@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OODProject.Dungeon.Themes;
 namespace OODProject.Dungeon.BuildingBlocks;
 
 
 public class AddWeaponsProc : IBuildingBlock
 {
-
+    private readonly IDungeonTheme _theme;
     private readonly int _count;
     private Random _random = new Random();
 
@@ -33,26 +33,29 @@ public class AddWeaponsProc : IBuildingBlock
         (baseItem) => new SmartDecorator(baseItem)
     };
 
-    public AddWeaponsProc(int count = 5)
+    public AddWeaponsProc(IDungeonTheme theme, int count = 5)
     {
         _count = count;
+        _theme = theme;
     }
 
     public void Apply(Board board)
     {
         var emptyFields = board.GetAllFields().Where(f => f.CanEnter() && f.Items.Count == 0)
             .ToList();
-
-        int placed = 0;
+        int artifactIndex = _random.Next(emptyFields.Count);
+        Field artifactField = emptyFields[artifactIndex];
+        
+        artifactField.AddItem(_theme.CreateArtifact());
+        
+        int placed = 1;
 
         while(placed < _count && emptyFields.Count > 0)
         {
             int index = _random.Next(emptyFields.Count);
             Field field = emptyFields[index];
 
-            Item item = _weaponFactories[_random.Next(_weaponFactories.Count)]();
-
-            item = _modifierFactories[_random.Next(_modifierFactories.Count)](item);
+            Item item = _theme.CreateRandomItem();
 
             field.AddItem(item);
 

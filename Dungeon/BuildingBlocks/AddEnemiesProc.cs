@@ -4,19 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OODProject.Dungeon.Themes;
 namespace OODProject.Dungeon.BuildingBlocks;
 
 
 public class AddEnemiesProc : IBuildingBlock
 {
+    private readonly IDungeonTheme _theme;
     private readonly int _count;
     private Random _random = new Random();
 
 
-    public AddEnemiesProc(int count = 10)
+    public AddEnemiesProc(IDungeonTheme theme, int count = 10)
     {
         _count = count;
+        _theme = theme;
     }
 
     public void Apply(Board board)
@@ -45,11 +47,7 @@ public class AddEnemiesProc : IBuildingBlock
             int index = _random.Next(availablePositions.Count);
             Position randomPos = availablePositions[index];
 
-            int roll = _random.Next(100);
-            Enemy enemy;
-
-            if (roll < 50) enemy = new Enemy(randomPos, "Goblin", 'g', 30, 10, 2);
-            else enemy = new Enemy(randomPos, "Orc", 'o', 50, 15, 4);
+            Enemy enemy = _theme.CreateRandomEnemy(randomPos);
 
             board.Enemies.Add(enemy);
 

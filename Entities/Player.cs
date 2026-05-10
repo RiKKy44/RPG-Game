@@ -31,7 +31,7 @@ public class Player : Entity
         }
     }
 
-    public Player(int inventorySize = 10, Position position = default) : base(position)
+    public Player(string name,int inventorySize = 10, Position position = default) : base(position)
     {
         InventorySize = inventorySize;
         Strength = 5;
@@ -44,6 +44,7 @@ public class Player : Entity
         _goldCount = 0;
         _coinCount = 0;
         MaxHealth = 100;
+        _name = name;
     }
 
     public void Equip(Item item, HandSlot slot)
