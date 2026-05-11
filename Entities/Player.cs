@@ -16,6 +16,30 @@ public class Player : Entity
     
     public string Name => _name;
     public IReadOnlyList<Item> Inventory => _inventory;
+    
+    public override int Wisdom
+    {
+        get { return base.Wisdom + (RightHand?.GetWisdomBonus() ?? 0) + (LeftHand?.GetWisdomBonus() ?? 0); }
+        protected set { base.Wisdom = value; }
+    }
+
+    public override int Luck
+    {
+        get { return base.Luck + (RightHand?.GetLuckBonus() ?? 0) + (LeftHand?.GetLuckBonus() ?? 0); }
+        protected set { base.Luck = value; }
+    }
+
+    public override int Strength
+    {
+        get { return base.Strength + (RightHand?.GetStrengthBonus() ?? 0) + (LeftHand?.GetStrengthBonus() ?? 0); }
+        protected set { base.Strength = value; }
+    }
+
+    public override int Dexterity
+    {
+        get { return base.Dexterity + (RightHand?.GetDexterityBonus() ?? 0) + (LeftHand?.GetDexterityBonus() ?? 0); }
+        protected set { base.Dexterity = value; }
+    }
 
     public int InventorySize
     {

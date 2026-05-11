@@ -89,7 +89,7 @@ public class Renderer
             string line = "";
 
             if (row == 1) line = "   ===== CHARACTER & INVENTORY MENU =====";
-
+            else if (row == 2) line = $"   Name: {_state.Player.Name}";
             else if (row == 3) line = $"   Left Hand:  {GetHandDisplay(_state.Player.LeftHand)}";
             else if (row == 4) line = $"   Right Hand: {GetHandDisplay(_state.Player.RightHand)}";
 

@@ -22,7 +22,7 @@ public abstract class Entity : IDrawable
     
     private Item? _rightHand;
 
-    public int Strength
+    public virtual int Strength
     {
         get { return _strength; }
 
@@ -35,7 +35,7 @@ public abstract class Entity : IDrawable
             _strength = value;
         }
     }
-    public int Dexterity
+    public virtual int Dexterity
     {
         get { return _dexterity; }
         protected set
@@ -48,7 +48,7 @@ public abstract class Entity : IDrawable
         }
     }
 
-    public int Health
+    public virtual int Health
     {
         get { return _health; }
         protected set
@@ -57,7 +57,7 @@ public abstract class Entity : IDrawable
         }
     }
 
-    public int Luck
+    public virtual int Luck
     {
         get { return _luck; }
         protected set
@@ -71,7 +71,7 @@ public abstract class Entity : IDrawable
         }
     }
 
-    public int Aggression
+    public virtual int Aggression
     {
         get { return _aggression; }
         protected set
@@ -99,7 +99,7 @@ public abstract class Entity : IDrawable
             _maxHealth = value;
         }
     }
-    public int Wisdom
+    public virtual int Wisdom
     {
         get { return _wisdom; }
         protected set
@@ -168,4 +168,5 @@ public abstract class Entity : IDrawable
         Health -= amount;
         if (Health < 0) Health = 0;
     }
+    
 }
