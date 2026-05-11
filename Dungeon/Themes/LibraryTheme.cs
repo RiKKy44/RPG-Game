@@ -1,6 +1,7 @@
 using OODProject.Dungeon.Layouts;
 using OODProject.Items.Modifiers;
 using OODProject.Items.UnusableItems;
+using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 using OODProject.Items.Weapons.WeaponTypes;
 using OODProject.Entities;
 namespace OODProject.Dungeon.Themes;
@@ -33,4 +34,13 @@ public class LibraryTheme : IDungeonTheme
         return new StrongDecorator(new BlackWand());
     }
     
+    public Item CreateRandomWeapon()
+    {
+        Item baseWeapon = _random.Next(100) < 60 
+            ? new Dagger() 
+            : new Sword();
+
+        if (_random.Next(100) < 50) return new SmartDecorator(baseWeapon);
+        return baseWeapon;
+    }
 }

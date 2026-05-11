@@ -16,8 +16,8 @@ public class TreasuryLayout : BaseDungeonLayout
         new AddPathsProc().Apply(board);
         new AddPathsProc().Apply(board);
 
-        new AddWeaponsProc(_theme, count: 3).Apply(board);
-        new AddItemsProc(_theme, count: 30).Apply(board); 
+        new AddWeaponsProc(_theme, count: 10).Apply(board);
+        new AddItemsProc(_theme, count: 5).Apply(board); 
         new AddEnemiesProc(_theme, count: 12).Apply(board);
     }
 }

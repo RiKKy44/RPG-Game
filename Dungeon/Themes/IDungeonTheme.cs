@@ -11,4 +11,6 @@ public interface IDungeonTheme{
     Enemy CreateRandomEnemy(Position pos);
 
     Item CreateArtifact();
+    
+    Item CreateRandomWeapon();
 }

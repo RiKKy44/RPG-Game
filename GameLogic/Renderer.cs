@@ -107,6 +107,7 @@ public class Renderer
                 line = "   " + GetInventoryRow(row - 15);
             }
             Console.Write(line.PadRight(TotalConsoleWidth));
+            Console.WriteLine(_state.Player.RightHand?.GetWisdomBonus());
         }
     }
 

@@ -48,6 +48,7 @@ public class AddWeaponsProc : IBuildingBlock
         
         artifactField.AddItem(_theme.CreateArtifact());
         
+        emptyFields.RemoveAt(artifactIndex);
         int placed = 1;
 
         while(placed < _count && emptyFields.Count > 0)
@@ -55,10 +56,10 @@ public class AddWeaponsProc : IBuildingBlock
             int index = _random.Next(emptyFields.Count);
             Field field = emptyFields[index];
 
-            Item item = _theme.CreateRandomItem();
-
-            field.AddItem(item);
-
+            Item weapon = _theme.CreateRandomWeapon();
+            
+            field.AddItem(weapon);
+            
             emptyFields.RemoveAt(index);
             placed++;
         }

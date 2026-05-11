@@ -13,8 +13,8 @@ public class MetalLayout : BaseDungeonLayout
     {
         new AddChambersProc(count: 20, minSize: 4, maxSize: 6).Apply(board);
         new AddPathsProc().Apply(board); 
-        new AddWeaponsProc(_theme, count: 5).Apply(board);
-        new AddItemsProc(_theme, count: 15).Apply(board);
+        new AddWeaponsProc(_theme, count: 10).Apply(board);
+        new AddItemsProc(_theme, count: 5).Apply(board);
         new AddEnemiesProc(_theme, count: 15).Apply(board);
     }
 }
