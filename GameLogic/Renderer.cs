@@ -2,7 +2,7 @@ using OODProject.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using System;
-
+using OODProject.Logs;
 namespace OODProject;
 
 public class Renderer
@@ -26,6 +26,7 @@ public class Renderer
         }
         else if (_state.CurrentView == ViewMode.Inventory) RenderInventoryScreen();
         else if (_state.CurrentView == ViewMode.Combat) RenderCombatScreen();
+        RenderLogs();
     }
     private void RenderMapScreen()
     {
@@ -74,6 +75,8 @@ public class Renderer
 
     private void RenderInventoryScreen()
     {
+        Console.Clear();
+        Console.SetCursorPosition(0, 0);
         var controlsList = _state.ActionDescriptions.ToList();
         var controlLines = new List<string>();
         for (int i = 0; i < controlsList.Count; i += 4)
@@ -174,4 +177,26 @@ public class Renderer
         }
     }
 
+    private void RenderLogs()
+    {
+        Console.WriteLine("\n--- Last Logs ---".PadRight(Console.WindowWidth - 1));
+
+        var logs = GameLogger.Instance.AllLogs;
+        var last5 = logs.TakeLast(5).ToList();
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (i < last5.Count)
+            {
+                string logLine = last5[i].Length > Console.WindowWidth - 2
+                                 ? last5[i].Substring(0, Console.WindowWidth - 2)
+                                 : last5[i];
+                Console.WriteLine(logLine.PadRight(Console.WindowWidth - 1));
+            }
+            else
+            {
+                Console.WriteLine("".PadRight(Console.WindowWidth - 1));
+            }
+        }
+    }
 }

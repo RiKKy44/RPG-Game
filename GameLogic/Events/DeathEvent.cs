@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 namespace OODProject.GameLogic.Events;
 
 
-
-
-public interface IGameObserver<T>
+public class DeathEvent
 {
-    void OnNotify(T eventData);
+    public Species DeadSpecies { get; set; }
+
+    public DeathEvent(Species deadSpecies)
+    {
+        DeadSpecies = deadSpecies;
+    }
 }

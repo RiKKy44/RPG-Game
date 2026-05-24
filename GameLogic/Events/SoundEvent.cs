@@ -13,9 +13,12 @@ public class SoundEvent
 
     public int Range { get; set; }
 
-    public SoundEvent(Position soure, int range)
+    public Board DungeonBoard { get; }
+
+    public SoundEvent(Position soure, int range, Board board)
     {
         Source = soure; 
         Range = range;
+        DungeonBoard = board;
     }
 }

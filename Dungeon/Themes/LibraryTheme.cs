@@ -4,6 +4,8 @@ using OODProject.Items.UnusableItems;
 using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 using OODProject.Items.Weapons.WeaponTypes;
 using OODProject.Entities;
+using OODProject.GameLogic.Events;
+
 namespace OODProject.Dungeon.Themes;
 
 public class LibraryTheme : IDungeonTheme
@@ -26,8 +28,8 @@ public class LibraryTheme : IDungeonTheme
     public Enemy CreateRandomEnemy(Position pos)
     {
         int roll = _random.Next(100);
-        if (roll < 70) return new Enemy(pos, "Apprentice", 'a', health: 30, attackValue: 15, armor: 0);
-        return new Enemy(pos, "Mage", 'M', health: 50, attackValue: 25, armor: 2);
+        if (roll < 70) return new Enemy(pos, "Apprentice", 'a', health: 30, attackValue: 15, armor: 0, Species.Mage);
+        return new Enemy(pos, "Mage", 'M', health: 50, attackValue: 25, armor: 2, Species.Mage);
     }
     public Item CreateArtifact()
     {

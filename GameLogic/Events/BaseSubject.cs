@@ -10,9 +10,9 @@ namespace OODProject.GameLogic.Events;
 
 public abstract class BaseSubject<T> : ISubject<T>
 {
-    private readonly List<IObserver<T>> _observers = new List<IObserver<T>>();
+    private readonly List<IGameObserver<T>> _observers = new List<IGameObserver<T>>();
 
-    public void Attach(IObserver<T> observer)
+    public void Attach(IGameObserver<T> observer)
     {
         if (!_observers.Contains(observer)){
             _observers.Add(observer);
@@ -20,7 +20,7 @@ public abstract class BaseSubject<T> : ISubject<T>
     }
 
 
-    public void Detach(IObserver<T> observer)
+    public void Detach(IGameObserver<T> observer)
     {
         _observers?.Remove(observer);
     }

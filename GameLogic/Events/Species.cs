@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 namespace OODProject.GameLogic.Events;
 
 
-
-
-public interface IGameObserver<T>
+public enum Species
 {
-    void OnNotify(T eventData);
+    Goblin,
+    Skeleton,
+    Mage,
+    Robot,
+    Safe
 }

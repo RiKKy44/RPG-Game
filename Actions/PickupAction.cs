@@ -30,7 +30,7 @@ public class PickupAction : IAction
 
             if(noiseRange > 0)
             {
-                var soundEvent = new SoundEvent(player.CurrentPosition, noiseRange);
+                var soundEvent = new SoundEvent(player.CurrentPosition, noiseRange, board);
                 SoundBus.Instance.Notify(soundEvent);
             }
         }
