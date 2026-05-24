@@ -58,4 +58,6 @@ public abstract class Item : IDrawable
     {
         return 0;
     }
+
+    public virtual int GetSoundRange() => 0;
 }

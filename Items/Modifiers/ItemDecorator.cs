@@ -29,4 +29,5 @@ public abstract class ItemDecorator : Item
     public override int GetDexterityBonus() => _innerItem.GetDexterityBonus();
     public override int GetWisdomBonus() => _innerItem.GetWisdomBonus();
     public override int GetAggressionBonus() => _innerItem.GetAggressionBonus();
+    public override int GetSoundRange() => _innerItem.GetSoundRange();
 }

@@ -11,4 +11,6 @@ public abstract class MagicalWeapon : Weapon
 {
     public MagicalWeapon(int damage, int weight) : base(damage, weight) { }
     public override void Accept(IAttackMethod visitor, Item? decorator = null) => visitor.Visit(this, decorator ?? this);
+
+    public override int GetSoundRange() => 5;
 }
