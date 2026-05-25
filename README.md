@@ -55,7 +55,7 @@ Implemented entirely from scratch **without using built-in C# events (`event`, `
 1. Clone the repository:
 
 ```bash
-git clone [link-to-your-repo]
+git clone git@github.com:RiKKy44/RPG-Game.git
 ```
 
 2. Ensure the `config.ini` file is located in the root directory and contains the required data:
