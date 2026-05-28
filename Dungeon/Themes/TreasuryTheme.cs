@@ -12,7 +12,7 @@ public class TreasuryTheme : IDungeonTheme
     public IDungeonLayout GetLayoutStrategy() => new TreasuryLayout(this); 
 
     public Item CreateRandomItem() => _random.Next(100) < 50 ? new Gold() : new Coin();
-    public Enemy CreateRandomEnemy(Position pos) => new Enemy(pos, "Aggressive Safe", 'S', 100, 20, 15);
+    public Enemy CreateRandomEnemy(Position pos) => new Enemy(pos, "Aggressive Safe", 'S', 100, 20, 15,GameLogic.Events.Species.Safe);
     public Item CreateArtifact() => new GreatAxe(70, 50); 
     
     public Item CreateRandomWeapon()

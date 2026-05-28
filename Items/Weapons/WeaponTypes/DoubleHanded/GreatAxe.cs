@@ -16,7 +16,10 @@ public class GreatAxe : HeavyWeapon
     {
         return base.GetSymbol();
     }
-
+    public override bool IsTwoHanded()
+    {
+        return true;
+    }
     public GreatAxe(int damage = 60, int weight = 45) : base(damage, weight) { }
 
 }

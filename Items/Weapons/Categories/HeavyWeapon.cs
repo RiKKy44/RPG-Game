@@ -11,4 +11,6 @@ public abstract class HeavyWeapon : Weapon
 {
     public HeavyWeapon(int damage, int weight) : base(damage, weight) { }
     public override void Accept(IAttackMethod visitor, Item? decorator = null) => visitor.Visit(this, decorator ?? this);
+
+    public override int GetSoundRange() => 10;
 }

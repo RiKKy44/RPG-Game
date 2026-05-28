@@ -9,17 +9,20 @@ public class Program
     public static void Main(string[] args)
     {
 
-        // Console.WindowWidth = 120;
-        // Console.BufferWidth = 120;
-        // Console.WindowHeight = 35;
-        // Console.BufferHeight = 35;
+        if (OperatingSystem.IsWindows())
+        {
+            Console.WindowWidth = 120;
+            Console.BufferWidth = 120;
+            Console.WindowHeight = 40; 
+            Console.BufferHeight = 40; 
+        }
         Console.OutputEncoding = Encoding.UTF8;
 
         ConfigurationData config;
 
         try
         {
-            config = ConfigLoader.Load("/Users/kacper/Documents/Studia/Projects/OOD/OODProject/OODProject/GameLogic/Configuration/config.ini");
+            config = ConfigLoader.Load("config.ini");
         }
         catch (Exception e)
         {

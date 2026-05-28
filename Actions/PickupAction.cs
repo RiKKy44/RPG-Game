@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OODProject.Logs;
+using OODProject.GameLogic.Events;
 
 namespace OODProject.Actions;
 
@@ -23,8 +24,16 @@ public class PickupAction : IAction
             player.PickUpItem(item);
             field.RemoveItem(item);
             GameLogger.Instance.Log($"Player picked up: {item.GetName()}");
+
+
+            int noiseRange = item.GetSoundRange();
+
+            if(noiseRange > 0)
+            {
+                var soundEvent = new SoundEvent(player.CurrentPosition, noiseRange, board);
+                SoundBus.Instance.Notify(soundEvent);
+            }
         }
     }
     public string Description => "Pick up item";
-
 }

@@ -4,7 +4,7 @@ using OODProject.Items.UnusableItems;
 using OODProject.Items.Weapons.WeaponTypes.SingleHanded;
 using OODProject.Entities;
 using OODProject.Items.Weapons.WeaponTypes.DoubleHanded;
-
+using OODProject.GameLogic.Events;
 namespace OODProject.Dungeon.Themes;
 public class MetalTheme : IDungeonTheme
 {
@@ -13,7 +13,7 @@ public class MetalTheme : IDungeonTheme
     public IDungeonLayout GetLayoutStrategy() => new MetalLayout(this);
 
     public Item CreateRandomItem() => _random.Next(100) < 40 ? new Rock() : new HealingPlus(); 
-    public Enemy CreateRandomEnemy(Position pos) => new Enemy(pos, "Cleaning Robot", 'r', 40, 12, 5);
+    public Enemy CreateRandomEnemy(Position pos) => new Enemy(pos, "Cleaning Robot", 'r', 40, 12, 5, Species.Robot);
     public Item CreateArtifact() => new StrongDecorator(new Sword(50, 15)); 
     
     public Item CreateRandomWeapon()
