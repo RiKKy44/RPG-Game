@@ -1,10 +1,10 @@
-# 🗡️ Console Roguelike RPG - Object-Oriented Design Project
+#  Console Roguelike RPG - Object-Oriented Design Project
 
 An advanced console-based Roguelike game written in C# (.NET 9.0). This project was created as a comprehensive demonstration of applying software engineering best practices (SOLID, Loose Coupling) and classic design patterns in game architecture.
 
 ---
 
-## ✨ Gameplay Features
+## Gameplay Features
 
 - **Procedural Dungeon Generation:** The board is built on the fly based on a randomized Theme (Library, Treasury, Metal), which dictates the wall layouts, monster pools, and generated loot.
 - **Advanced Sound Propagation:** Player actions (e.g., picking up heavy weapons) generate noise. Enemies utilize a BFS (Breadth-First Search) algorithm to determine if the sound reached them by tracing paths around walls, and they actively react to it.
@@ -14,7 +14,7 @@ An advanced console-based Roguelike game written in C# (.NET 9.0). This project 
 
 ---
 
-## 📐 Architecture & Design Patterns
+##  Architecture & Design Patterns
 
 The project places a massive emphasis on flexibility, modularity, and scalability. Below are the core design patterns utilized in the codebase:
 
@@ -43,7 +43,7 @@ Implemented entirely from scratch **without using built-in C# events (`event`, `
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Requirements
 
