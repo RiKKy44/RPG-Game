@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using OODProject.Logs;
+using OODProject.Network;
 
 
 namespace OODProject;
@@ -31,7 +32,44 @@ public class Program
         }
         
         GameLogger.Instance.SetStrategy(new FileLogStrategy(config.LogPath, config.PlayerName));
-        Game game = new Game(config);
-        game.Run();
+
+        Console.Clear();
+        Console.WriteLine("[S] - Start as Server (Host)");
+        Console.WriteLine("[C] - Start as Client (Player)");
+        Console.Write("Choose mode: ");
+
+        var key = Console.ReadKey(true).Key;
+
+        if(key == ConsoleKey.S)
+        {
+            Console.Clear();
+
+            Console.WriteLine("Starting server...");
+
+
+            GameServer server = new GameServer(config);
+
+            server.Start();
+        }
+        else if(key == ConsoleKey.C)
+        {
+            Console.Clear();
+            Console.WriteLine("Starting client...");    
+
+            Console.Write("Enter server IP (default: localhost): ");
+            string? ip = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(ip)) ip = "127.0.0.1";
+
+            GameClient client = new GameClient();
+
+            client.ConnectAsync(ip, 5555).GetAwaiter().GetResult();
+        }
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("Starting LOCAL game...");
+            Game game = new Game(config);
+            game.Run();
+        }
     }
 }

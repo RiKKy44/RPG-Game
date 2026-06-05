@@ -75,6 +75,15 @@ public class GameServer
 
         try
         {
+
+            var idMsg = new NetworkMessage
+            {
+                Type = MessageType.AssignId,
+                Payload = playerId.ToString()
+            };
+
+            await writer.WriteLineAsync(JsonSerializer.Serialize(idMsg));
+
             lock (_stateLock)
             {
                 Player newPlayer = new Player($"Player {playerId}", position: new Position(1, 1));

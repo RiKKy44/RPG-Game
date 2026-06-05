@@ -29,7 +29,7 @@ public class GameState
 
     public int LocalPlayerId { get; set; }
 
-    public Player Player => Players.FirstOrDefault(p => p.Id == LocalPlayerId);
+    public Player? Player => Players.FirstOrDefault(p => p.Id == LocalPlayerId);
     public Board Board { get;  }
 
     public IEnumerable<string> ActionDescriptions;
@@ -68,48 +68,4 @@ public class GameState
     }
 
 
-    public GameStateDTO ToDto(GameState state)
-    {
-        var dto = new GameStateDTO();
-
-        dto.MapGrid = new string[GameConfig.Height];
-
-        for ( int y = 0; y< GameConfig.Height; y++)
-        {
-            char[] row = new char[GameConfig.Width];
-            for(int x =0; x<GameConfig.Width; x++)
-            {
-                var field = state.Board.GetField(new Position(x, y));
-
-                row[x] = field.Items.Count > 0 ? field.Items[0].GetSymbol() : field.GetSymbol();
-            }
-            dto.MapGrid[y] = new string(row);
-        }
-        
-        foreach(var p in state.Players)
-        {
-            dto.Players.Add(new PlayerDTO
-            {
-                Id = p.Id,
-                Name = p.Name,
-                X = p.CurrentPosition.X,
-                Y = p.CurrentPosition.Y,
-                Health = p.Health,
-                MaxHealth = p.MaxHealth,
-                Symbol = p.GetSymbol()
-            });
-        }
-
-        foreach(var e in state.Board.Enemies)
-        {
-            dto.Enemies.Add(new EnemyDTO
-            {
-                Name = e.GetName(),
-                X = e.CurrentPosition.X,
-                Y = e.CurrentPosition.Y,
-                Symbol = e.GetSymbol()
-            });
-        }
-        return dto;
-    }
 }
