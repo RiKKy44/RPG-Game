@@ -25,10 +25,17 @@ public class Game
         IDungeonLayout layout = selectedTheme.GetLayoutStrategy();
         Board board = new DungeonBuilder().StartFilled().Apply(layout).Build();
 
-        Player player = new Player(_config.PlayerName, position: new Position(1, 1));
-        GameState state = new GameState(player, board);
+        GameState state = new GameState(board);
 
-        GameLogger.Instance.Log($"Entered dungeon: {selectedTheme.GetType().Name}");
+        Player player = new Player(_config.PlayerName, position: new Position(1, 1));
+
+        player.Id = 1;
+
+        state.Players.Add(player);
+
+        state.LocalPlayerId = player.Id;
+
+        GameLogger.Instance.Log($"Player: {player.Name} Entered dungeon: {selectedTheme.GetType().Name}");
         GameLogger.Instance.Log(selectedTheme.GetIntroMessage());
 
         var actions = new Dictionary<ConsoleKey, IAction>();

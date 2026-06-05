@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace OODProject.Network.DTOs
+namespace OODProject.Network.DTOs;
+
+
+public class GameStateDTO
 {
-    internal class GameStateDTO
-    {
-    }
+    [JsonPropertyName("map")]
+    public string[] MapGrid { get; set; }
+
+    [JsonPropertyName("players")]
+    public List<PlayerDTO> Players { get; set; } = new();
+
+    [JsonPropertyName("enemies")]
+    public List<EnemyDTO> Enemies { get; set; } = new();
+
+    [JsonPropertyName("messages")]
+    public List<string> RecentMessages { get; set; } = new();
 }

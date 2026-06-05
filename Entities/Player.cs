@@ -11,6 +11,7 @@ public class Player : Entity
     private string _name;
     
     private int _coinCount;
+    public int Id { get; set; }
     public int GoldCount => _goldCount;
     public int CoinCount => _coinCount;
     
