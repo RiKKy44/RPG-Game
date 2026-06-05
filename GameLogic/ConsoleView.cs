@@ -5,13 +5,13 @@ using System;
 using OODProject.Logs;
 namespace OODProject;
 
-public class Renderer
+public class ConsoleView
 {
     private GameState _state;
 
     private const int TotalConsoleWidth = 120;
 
-    public Renderer(GameState state)
+    public ConsoleView(GameState state)
     {
         _state = state;
     }
@@ -198,5 +198,34 @@ public class Renderer
                 Console.WriteLine("".PadRight(Console.WindowWidth - 1));
             }
         }
+    }
+
+
+    private void RenderHistoryScreen()
+    {
+        Console.Clear();
+        Console.WriteLine("=== GAME HISTORY ===");
+        foreach (var log in GameLogger.Instance.AllLogs) Console.WriteLine(log);
+        Console.WriteLine("\nPress any key to return...");
+        Console.ReadKey();
+    }
+    public void RenderGameOverScreen()
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(@"
+   _____          __  __ ______    ______      ________ _____  
+  / ____|   /\   |  \/  |  ____|  / __ \ \    / /  ____|  __ \ 
+ | |  __   /  \  | \  / | |__    | |  | \ \  / /| |__  | |__) |
+ | | |_ | / /\ \ | |\/| |  __|   | |  | |\ \/ / |  __| |  _  / 
+ | |__| |/ ____ \| |  | | |____  | |__| | \  /  | |____| | \ \ 
+  \_____/_/    \_\_|  |_|______|  \____/   \/   |______|_|  \_\
+    ");
+
+        Console.ResetColor();
+        Console.WriteLine("\n");
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+
+        Console.WriteLine("\nPress any key to leave...");
     }
 }

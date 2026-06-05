@@ -9,11 +9,9 @@ namespace OODProject.Actions;
 
 public class ExitAction : IAction
 {
-
-    public event Action? OnExit;
     public void Execute(GameState state)
     {
-        OnExit?.Invoke();
+        state.IsRunning = false;
     }
 
     public string Description => " Exit game";
