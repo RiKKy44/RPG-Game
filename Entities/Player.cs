@@ -252,7 +252,7 @@ public class Player : Entity
         }
     }
 
-    public void SyncFromNetwork(int id, int health, int maxHealth, int coins, int gold, Item leftHand, Item rightHand)
+    public void SyncFromNetwork(int id, int health, int maxHealth, int coins, int gold, Item leftHand, Item rightHand, List<Item> inventory)
     {
         Id = id;
 
@@ -263,5 +263,6 @@ public class Player : Entity
 
         LeftHand = leftHand;
         RightHand = rightHand;
+        _inventory = inventory;
     }
 }

@@ -41,6 +41,18 @@ public class GameServer
         _serverState = new GameState(board);
 
         GameLogger.Instance.Log($"[SERVER] Created map with theme: {selectedTheme.GetType().Name}");
+        
+        _actions = new Dictionary<ConsoleKey, IAction>();
+        foreach (var (key, action) in layout.GetActions())
+        {
+            _actions[key] = action;
+        }
+
+        _serverState.ActionDescriptions = _actions
+            .Select(kvp => $"[{kvp.Key}] - {kvp.Value.Description}")
+            .Distinct()
+            .ToList();
+
     }
 
     public void Start()
@@ -93,7 +105,7 @@ public class GameServer
 
             Console.WriteLine($"[SERVER] Player {playerId} joined the game");
 
-            await BroadcastStateAsync();
+            BroadcastState();
 
             while (client.Connected)
             {
@@ -111,7 +123,7 @@ public class GameServer
                     {
                         ProcessClientCommand(command);
 
-                        await BroadcastStateAsync();
+                        BroadcastState();
                     }
                 }
             }
@@ -130,7 +142,7 @@ public class GameServer
             }
             client.Close();
 
-            await BroadcastStateAsync();
+            BroadcastState();
         }
     }
 
@@ -162,32 +174,33 @@ public class GameServer
         }
     }
 
-    private async Task BroadcastStateAsync()
+    private void BroadcastState()
     {
-        string jsonToSend = "";
+        string jsonToSend;
 
         lock (_stateLock)
         {
             GameStateDTO stateDto = ToDto(_serverState);
-
             var networkMessage = new NetworkMessage
             {
                 Type = MessageType.StateUpdate,
                 Payload = JsonSerializer.Serialize(stateDto)
             };
-
-            jsonToSend = JsonSerializer.Serialize(networkMessage);
+            jsonToSend = JsonSerializer.Serialize(networkMessage) + "\n";
         }
+
+        byte[] data = Encoding.UTF8.GetBytes(jsonToSend);
 
         var clients = _connectedClients.ToArray();
         foreach (var client in clients)
         {
             try
             {
-                var writer = new StreamWriter(client.GetStream()) { 
-                    AutoFlush = true 
-                };
-                await writer.WriteLineAsync(jsonToSend); 
+                lock (client)
+                {
+                    var stream = client.GetStream();
+                    stream.Write(data, 0, data.Length);
+                }
             }
             catch
             {
@@ -229,6 +242,7 @@ public class GameServer
                 Gold = p.GoldCount,
                 LeftHandDisplay = p.LeftHand != null ? $"{p.LeftHand.GetSymbol()} {p.LeftHand.GetName()}" : "empty",
                 RightHandDisplay = p.RightHand != null ? $"{p.RightHand.GetSymbol()} {p.RightHand.GetName()}" : "empty",
+                InventoryItems = p.Inventory.Select(i => $"{i.GetSymbol()}|{i.GetName()}").ToList()
             });
         }
 

@@ -17,6 +17,7 @@ public class GameClient
     private int _myPlayerId = -1;
     private GameState? _localState;
     private ConsoleView? _view;
+    private readonly object _renderLock = new object();
 
     public async Task ConnectAsync(string ip, int port)
     {
@@ -51,9 +52,9 @@ public class GameClient
             {
                 var dto = JsonSerializer.Deserialize<GameStateDTO>(message.Payload);
 
-                SyncLocalState(dto);
-                if(_view != null)
+                lock (_renderLock)
                 {
+                    SyncLocalState(dto);
                     _view.Render();
                 }
             }
@@ -70,8 +71,10 @@ public class GameClient
             for (int x = 0; x < GameConfig.Width; x++)
             {
                 char symbol = dto.MapGrid[y][x];
-                if (symbol == '#') _localState.Board.SetField(new Position(x, y), new Wall());
-                else _localState.Board.SetField(new Position(x, y), new EmptyField());
+                if (symbol == Symbols.Wall)
+                    _localState.Board.SetField(new Position(x, y), new Wall());
+                else
+                    _localState.Board.SetField(new Position(x, y), new EmptyField());
             }
         }
         _localState.Players.Clear();
@@ -86,8 +89,14 @@ public class GameClient
             Item? netRightHand = pDto.RightHandDisplay != "empty"
                 ? new NetworkItem(pDto.RightHandDisplay.Substring(2), pDto.RightHandDisplay[0])
                 : null;
+            List<Item> netInventory = new List<Item>();
 
-            p.SyncFromNetwork(pDto.Id, pDto.Health, pDto.MaxHealth, pDto.Coins, pDto.Gold, netLeftHand!, netRightHand!);
+            foreach (var itemStr in pDto.InventoryItems)
+            {
+                var parts = itemStr.Split('|');
+                netInventory.Add(new NetworkItem(parts[1], parts[0][0]));
+            }
+            p.SyncFromNetwork(pDto.Id, pDto.Health, pDto.MaxHealth, pDto.Coins, pDto.Gold, netLeftHand!, netRightHand!, netInventory);
 
             _localState.Players.Add(p);
         }
@@ -114,14 +123,20 @@ public class GameClient
 
             if (key == ConsoleKey.I)
             {
-                _localState.CurrentView = _localState.CurrentView == ViewMode.Inventory ? ViewMode.Map : ViewMode.Inventory;
-                _view.Render(); 
+                lock (_renderLock)
+                {
+                    _localState.CurrentView = _localState.CurrentView == ViewMode.Inventory ? ViewMode.Map : ViewMode.Inventory;
+                    _view.Render();
+                }
                 continue;
             }
             if (key == ConsoleKey.H)
             {
-                _localState.CurrentView = _localState.CurrentView == ViewMode.History ? ViewMode.Map : ViewMode.History;
-                _view.Render();
+                lock (_renderLock)
+                {
+                    _localState.CurrentView = _localState.CurrentView == ViewMode.History ? ViewMode.Map : ViewMode.History;
+                    _view.Render();
+                }
                 continue;
             }
 
