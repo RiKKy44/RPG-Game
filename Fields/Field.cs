@@ -6,7 +6,7 @@ public abstract class Field : IDrawable
 
     private List<Item> _items;
     
-    public IReadOnlyList<Item> Items => _items;
+    public List<Item> Items => _items;
     
     public Field()
     {

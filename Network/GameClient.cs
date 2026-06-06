@@ -1,4 +1,5 @@
-﻿using OODProject.Dungeon;
+﻿using OODProject.Actions;
+using OODProject.Dungeon;
 using OODProject.Entities;
 using OODProject.Logs;
 using OODProject.Network.DTOs;
@@ -18,6 +19,14 @@ public class GameClient
     private GameState? _localState;
     private ConsoleView? _view;
     private readonly object _renderLock = new object();
+
+    private readonly Dictionary<ConsoleKey, IAction> _localUIActions = new Dictionary<ConsoleKey, IAction>
+    {
+        { ConsoleKey.I, new ToggleInventoryAction() },
+        { ConsoleKey.H, new ShowHistoryAction() },
+        { ConsoleKey.UpArrow, new InventoryScrollAction(-1) },
+        { ConsoleKey.DownArrow, new InventoryScrollAction(1) }
+    };
 
     public async Task ConnectAsync(string ip, int port)
     {
@@ -46,7 +55,7 @@ public class GameClient
             if (message != null && message.Type == MessageType.AssignId)
             {
                 _myPlayerId = int.Parse(message.Payload);
-                _localState.LocalPlayerId = _myPlayerId;
+                if (_localState != null) _localState.LocalPlayerId = _myPlayerId;
             }
             else if (message != null && message.Type == MessageType.StateUpdate)
             {
@@ -54,8 +63,8 @@ public class GameClient
 
                 lock (_renderLock)
                 {
-                    SyncLocalState(dto);
-                    _view.Render();
+                    if (dto != null) SyncLocalState(dto);
+                    if (_view != null) _view.Render();
                 }
             }
         }
@@ -113,6 +122,25 @@ public class GameClient
             GameLogger.Instance.AllLogs.Clear();
             foreach (var log in dto.Logs) GameLogger.Instance.Log(log);
         }
+
+        if (dto.MapItems != null)
+        {
+            foreach (var itemStr in dto.MapItems)
+            {
+                var parts = itemStr.Split('|');
+                char symbol = parts[0][0];
+                string name = parts[1];
+                int x = int.Parse(parts[2]);
+                int y = int.Parse(parts[3]);
+                var field = _localState.Board.GetField(new Position(x, y));
+                field.Items.Add(new NetworkItem(name, symbol));
+            }
+        }
+        if (_localState.Player != null && _localState.Player.Inventory.Count > 0)
+        {
+            if (_localState.InventoryPointer >= _localState.Player.Inventory.Count)
+                _localState.InventoryPointer = Math.Max(0, _localState.Player.Inventory.Count - 1);
+        }
     }
 
     private void InputLoop(StreamWriter writer)
@@ -121,34 +149,31 @@ public class GameClient
         {
             var key = Console.ReadKey(true).Key;
 
-            if (key == ConsoleKey.I)
+            if (_localUIActions.TryGetValue(key, out var localAction))
             {
                 lock (_renderLock)
                 {
-                    _localState.CurrentView = _localState.CurrentView == ViewMode.Inventory ? ViewMode.Map : ViewMode.Inventory;
-                    _view.Render();
+                    if (_localState != null)
+                    {
+                        localAction.Execute(_localState); 
+                    }
+                    if (_view != null)
+                    {
+                        _view.Render(); 
+                    }
                 }
-                continue;
             }
-            if (key == ConsoleKey.H)
+            else if (_myPlayerId != -1 && _localState != null)
             {
-                lock (_renderLock)
+                var cmd = new ClientCommandDTO
                 {
-                    _localState.CurrentView = _localState.CurrentView == ViewMode.History ? ViewMode.Map : ViewMode.History;
-                    _view.Render();
-                }
-                continue;
-            }
+                    PlayerId = _myPlayerId,
+                    KeyCode = (int)key,
+                    ViewMode = (int)_localState.CurrentView,       
+                    InventoryPointer = _localState.InventoryPointer
+                };
 
-            if (_myPlayerId != -1)
-            {
-                var cmd = new ClientCommandDTO { 
-                    PlayerId = _myPlayerId, 
-                    KeyCode = (int)key };
-                var msg = new NetworkMessage { 
-                    Type = MessageType.PlayerCommand, 
-                    Payload = JsonSerializer.Serialize(cmd) };
-
+                var msg = new NetworkMessage { Type = MessageType.PlayerCommand, Payload = JsonSerializer.Serialize(cmd) };
                 writer.WriteLine(JsonSerializer.Serialize(msg));
             }
         }

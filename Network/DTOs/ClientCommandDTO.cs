@@ -14,5 +14,11 @@ public class ClientCommandDTO
 
     //console key
     [JsonPropertyName("key")]
-    public int KeyCode { get; set; } 
+    public int KeyCode { get; set; }
+
+    [JsonPropertyName("viewMode")]
+    public int ViewMode { get; set; }
+
+    [JsonPropertyName("inventoryPointer")]
+    public int InventoryPointer { get; set; }
 }

@@ -150,8 +150,10 @@ public class GameServer
     {
         lock (_stateLock)
         {
-
             _serverState.LocalPlayerId = command.PlayerId;
+
+            _serverState.CurrentView = (ViewMode)command.ViewMode;
+            _serverState.InventoryPointer = command.InventoryPointer;
 
             ConsoleKey key = (ConsoleKey)command.KeyCode;
 
@@ -166,10 +168,6 @@ public class GameServer
                         enemy.MoveRandomly(_serverState.Board, _serverState.Player.CurrentPosition);
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine($"[SERVER] Invalid key command {key} from Player {command.PlayerId}");
             }
         }
     }
@@ -259,6 +257,18 @@ public class GameServer
             });
         }
 
+        dto.MapItems = new List<string>();
+        for (int y = 0; y < GameConfig.Height; y++)
+        {
+            for (int x = 0; x < GameConfig.Width; x++)
+            {
+                var field = state.Board.GetField(new Position(x, y));
+                foreach (var item in field.Items)
+                {
+                    dto.MapItems.Add($"{item.GetSymbol()}|{item.GetName()}|{x}|{y}");
+                }
+            }
+        }
         dto.Message = state.Message;
         dto.ActionDescriptions = state.ActionDescriptions.ToList();
         return dto;

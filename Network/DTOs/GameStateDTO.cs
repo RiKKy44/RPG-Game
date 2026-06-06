@@ -30,4 +30,6 @@ public class GameStateDTO
 
     [JsonPropertyName("actions")]
     public List<string> ActionDescriptions { get; set; } = new List<string>();
+    [JsonPropertyName("mapItems")]
+    public List<string> MapItems { get; set; } = new List<string>();
 }
