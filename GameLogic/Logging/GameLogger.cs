@@ -12,7 +12,7 @@ public class GameLogger
     
     private readonly List<string> _allLogs = new List<string>();
     
-    public IReadOnlyList<string> AllLogs => _allLogs;
+    public List<string> AllLogs => _allLogs;
 
     private GameLogger()
     {

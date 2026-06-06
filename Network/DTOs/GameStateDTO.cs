@@ -11,7 +11,7 @@ namespace OODProject.Network.DTOs;
 public class GameStateDTO
 {
     [JsonPropertyName("map")]
-    public string[] MapGrid { get; set; }
+    public string[]? MapGrid { get; set; }
 
     [JsonPropertyName("players")]
     public List<PlayerDTO> Players { get; set; } = new();
@@ -21,4 +21,13 @@ public class GameStateDTO
 
     [JsonPropertyName("messages")]
     public List<string> RecentMessages { get; set; } = new();
+
+    [JsonPropertyName("logs")] 
+    public List<string> Logs { get; set; } = new List<string>();
+
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
+    [JsonPropertyName("actions")]
+    public List<string> ActionDescriptions { get; set; } = new List<string>();
 }

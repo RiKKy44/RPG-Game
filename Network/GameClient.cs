@@ -1,68 +1,108 @@
-﻿using System;
-using System.Net.Sockets;
-using System.IO;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text.Json;
+﻿using OODProject.Dungeon;
+using OODProject.Entities;
+using OODProject.Logs;
 using OODProject.Network.DTOs;
+using OODProject.Network.Proxy;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace OODProject.Network;
-
-
 
 public class GameClient
 {
     private int _myPlayerId = -1;
-    private GameStateDTO _latestState;
+    private GameState? _localState;
+    private ConsoleView? _view;
 
     public async Task ConnectAsync(string ip, int port)
     {
         TcpClient client = new TcpClient();
-
-        Console.WriteLine($"[CLIENT] Connecting to {ip}:{port}");
-
         await client.ConnectAsync(ip, port);
 
+        _localState = new GameState(new Board());
+        _view = new ConsoleView(_localState); 
+
         var stream = client.GetStream();
-
         StreamReader reader = new StreamReader(stream);
-
         StreamWriter writer = new StreamWriter(stream) { AutoFlush = true };
 
         _ = Task.Run(() => ReceiveLoopAsync(reader));
-
         InputLoop(writer);
     }
 
-
     private async Task ReceiveLoopAsync(StreamReader reader)
     {
-        try
+        while (true)
         {
-            while (true)
+            string? jsonLine = await reader.ReadLineAsync();
+            if (string.IsNullOrEmpty(jsonLine)) break;
+
+            var message = JsonSerializer.Deserialize<NetworkMessage>(jsonLine);
+            if (message != null && message.Type == MessageType.AssignId)
             {
-                string? jsonLine = await reader.ReadLineAsync();
-                if (string.IsNullOrEmpty(jsonLine))
-                    break;
-                var message = JsonSerializer.Deserialize<NetworkMessage>(jsonLine);
+                _myPlayerId = int.Parse(message.Payload);
+                _localState.LocalPlayerId = _myPlayerId;
+            }
+            else if (message != null && message.Type == MessageType.StateUpdate)
+            {
+                var dto = JsonSerializer.Deserialize<GameStateDTO>(message.Payload);
 
-                if(message != null && message.Type == MessageType.AssignId)
+                SyncLocalState(dto);
+                if(_view != null)
                 {
-                    _myPlayerId = int.Parse(message.Payload);
+                    _view.Render();
                 }
-                else if (message != null && message.Type == MessageType.StateUpdate)
-                {
-                    _latestState = JsonSerializer.Deserialize<GameStateDTO>(message.Payload);
-
-                    RenderNetworkView(_latestState);
-                }
-
             }
         }
-        catch(Exception ex)
+    }
+
+    private void SyncLocalState(GameStateDTO dto)
+    {
+        _localState.Message = dto.Message ?? "";
+        _localState.ActionDescriptions = dto.ActionDescriptions ?? new List<string>();
+
+        for (int y = 0; y < GameConfig.Height; y++)
         {
-            Console.Clear();
-            Console.WriteLine($"[CLIENT] Connection lost: {ex.Message}");
+            for (int x = 0; x < GameConfig.Width; x++)
+            {
+                char symbol = dto.MapGrid[y][x];
+                if (symbol == '#') _localState.Board.SetField(new Position(x, y), new Wall());
+                else _localState.Board.SetField(new Position(x, y), new EmptyField());
+            }
+        }
+        _localState.Players.Clear();
+        foreach (var pDto in dto.Players)
+        {
+            var p = new Player(pDto.Name, position: new Position(pDto.X, pDto.Y));
+
+            Item? netLeftHand = pDto.LeftHandDisplay != "empty"
+                ? new NetworkItem(pDto.LeftHandDisplay.Substring(2), pDto.LeftHandDisplay[0])
+                : null;
+
+            Item? netRightHand = pDto.RightHandDisplay != "empty"
+                ? new NetworkItem(pDto.RightHandDisplay.Substring(2), pDto.RightHandDisplay[0])
+                : null;
+
+            p.SyncFromNetwork(pDto.Id, pDto.Health, pDto.MaxHealth, pDto.Coins, pDto.Gold, netLeftHand!, netRightHand!);
+
+            _localState.Players.Add(p);
+        }
+
+        _localState.Board.Enemies.Clear();
+        foreach (var eDto in dto.Enemies)
+        {
+            _localState.Board.Enemies.Add(new Enemy(new Position(eDto.X, eDto.Y), eDto.Name, eDto.Symbol, 100, 0, 0, GameLogic.Events.Species.Goblin));
+        }
+
+    
+        if (dto.Logs != null)
+        {
+            GameLogger.Instance.AllLogs.Clear();
+            foreach (var log in dto.Logs) GameLogger.Instance.Log(log);
         }
     }
 
@@ -72,65 +112,30 @@ public class GameClient
         {
             var key = Console.ReadKey(true).Key;
 
-
-            if(_myPlayerId == -1)
+            if (key == ConsoleKey.I)
             {
-                var cmd = new ClientCommandDTO
-                {
-                    PlayerId = _myPlayerId,
-                    KeyCode = (int)key,
+                _localState.CurrentView = _localState.CurrentView == ViewMode.Inventory ? ViewMode.Map : ViewMode.Inventory;
+                _view.Render(); 
+                continue;
+            }
+            if (key == ConsoleKey.H)
+            {
+                _localState.CurrentView = _localState.CurrentView == ViewMode.History ? ViewMode.Map : ViewMode.History;
+                _view.Render();
+                continue;
+            }
 
-                };
-
-                var msg = new NetworkMessage
-                {
-                    Type = MessageType.PlayerCommand,
-                    Payload = JsonSerializer.Serialize(cmd)
-                };
+            if (_myPlayerId != -1)
+            {
+                var cmd = new ClientCommandDTO { 
+                    PlayerId = _myPlayerId, 
+                    KeyCode = (int)key };
+                var msg = new NetworkMessage { 
+                    Type = MessageType.PlayerCommand, 
+                    Payload = JsonSerializer.Serialize(cmd) };
 
                 writer.WriteLine(JsonSerializer.Serialize(msg));
             }
         }
     }
-
-
-
-    private void RenderNetworkView(GameStateDTO state)
-    {
-        Console.SetCursorPosition(0, 0);
-
-        for (int y = 0; y < state.MapGrid.Length; y++)
-        {
-            Console.WriteLine(state.MapGrid[y].PadRight(Console.WindowWidth - 1));
-        }
-
-        foreach (var player in state.Players)
-        {
-            Console.SetCursorPosition(player.X, player.Y);
-            if (player.Id == _myPlayerId)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write('¶'); 
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(player.Id.ToString()); 
-            }
-        }
-        Console.ResetColor();
-
-        Console.SetCursorPosition(0, state.MapGrid.Length + 2);
-        var myPlayer = state.Players.FirstOrDefault(p => p.Id == _myPlayerId);
-
-        if (myPlayer != null)
-        {
-            Console.WriteLine($"=== MULTIPLAYER MODE - You are Player {_myPlayerId}".PadRight(50));
-            Console.WriteLine($"HP: {myPlayer.Health} / {myPlayer.MaxHealth}".PadRight(50));
-
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("Press W/A/S/D to move, ESC to quit".PadRight(50));
-        }
-    }
-
 }

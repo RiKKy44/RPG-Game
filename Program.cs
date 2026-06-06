@@ -2,7 +2,6 @@
 using OODProject.Logs;
 using OODProject.Network;
 
-
 namespace OODProject;
 
 public class Program

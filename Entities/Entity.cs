@@ -126,8 +126,8 @@ public abstract class Entity : IDrawable
     public Position CurrentPosition
     {
         get { return _position; }
-        
-        protected set {_position = value; }
+
+        protected set { _position = value; }
     }
 
     public Entity(Position position, int strength, int dexterity, int health, int luck, int aggression, int wisdom, int maxHealh)

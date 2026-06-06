@@ -31,4 +31,16 @@ public class PlayerDTO
 
     [JsonPropertyName("symbol")]
     public char Symbol { get; set; }
+
+    [JsonPropertyName("leftHand")] 
+    public string LeftHandDisplay { get; set; } = "empty";
+
+    [JsonPropertyName("rightHand")] 
+    public string RightHandDisplay { get; set; } = "empty";
+    
+    [JsonPropertyName("coins")] 
+    public int Coins { get; set; }
+
+    [JsonPropertyName("gold")] 
+    public int Gold { get; set; }
 }

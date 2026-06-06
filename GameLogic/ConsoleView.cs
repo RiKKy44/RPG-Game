@@ -117,8 +117,11 @@ public class ConsoleView
 
     private char GetSymbolAt(Position position)
     {
-        if (_state.Player.CurrentPosition == position)
-            return _state.Player.GetSymbol();
+        var playerOnField = _state.Players.FirstOrDefault(p => p.CurrentPosition == position);
+        if (playerOnField != null)
+        {
+            return playerOnField.Id == _state.LocalPlayerId ? playerOnField.GetSymbol() : playerOnField.Id.ToString()[0];
+        }
 
         var enemy = _state.Board.Enemies.FirstOrDefault(e => e.CurrentPosition == position);
         if (enemy != null)

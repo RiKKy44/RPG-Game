@@ -224,9 +224,15 @@ public class GameServer
                 Y = p.CurrentPosition.Y,
                 Health = p.Health,
                 MaxHealth = p.MaxHealth,
-                Symbol = p.GetSymbol()
+                Symbol = p.GetSymbol(),
+                Coins = p.CoinCount,
+                Gold = p.GoldCount,
+                LeftHandDisplay = p.LeftHand != null ? $"{p.LeftHand.GetSymbol()} {p.LeftHand.GetName()}" : "empty",
+                RightHandDisplay = p.RightHand != null ? $"{p.RightHand.GetSymbol()} {p.RightHand.GetName()}" : "empty",
             });
         }
+
+
 
         foreach (var e in state.Board.Enemies)
         {
@@ -238,6 +244,9 @@ public class GameServer
                 Symbol = e.GetSymbol()
             });
         }
+
+        dto.Message = state.Message;
+        dto.ActionDescriptions = state.ActionDescriptions.ToList();
         return dto;
     }
 

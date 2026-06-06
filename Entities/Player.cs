@@ -12,8 +12,15 @@ public class Player : Entity
     
     private int _coinCount;
     public int Id { get; set; }
-    public int GoldCount => _goldCount;
-    public int CoinCount => _coinCount;
+    public int GoldCount
+    {
+        get; 
+        set;
+    }
+    public int CoinCount
+    {
+        get; set;
+    }
     
     public string Name => _name;
     public IReadOnlyList<Item> Inventory => _inventory;
@@ -243,5 +250,18 @@ public class Player : Entity
         {
             Health += value;
         }
+    }
+
+    public void SyncFromNetwork(int id, int health, int maxHealth, int coins, int gold, Item leftHand, Item rightHand)
+    {
+        Id = id;
+
+        Health = health;
+        MaxHealth = maxHealth;
+        CoinCount = coins;
+        GoldCount = gold;
+
+        LeftHand = leftHand;
+        RightHand = rightHand;
     }
 }
