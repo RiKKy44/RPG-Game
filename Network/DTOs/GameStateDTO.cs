@@ -32,4 +32,10 @@ public class GameStateDTO
     public List<string> ActionDescriptions { get; set; } = new List<string>();
     [JsonPropertyName("mapItems")]
     public List<string> MapItems { get; set; } = new List<string>();
+
+    [JsonPropertyName("currentEnemy")]
+    public EnemyDTO? CurrentEnemy { get; set; }
+
+    [JsonPropertyName("currentView")]
+    public int CurrentView { get; set; }
 }

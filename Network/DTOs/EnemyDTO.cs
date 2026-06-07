@@ -19,4 +19,17 @@ public class EnemyDTO
 
     [JsonPropertyName("symbol")]
     public char Symbol { get; set; }
+
+    [JsonPropertyName("hp")] 
+    public int Health { get; set; }
+
+    [JsonPropertyName("maxHp")] 
+    public int MaxHealth { get; set; }
+
+    [JsonPropertyName("attack")] 
+    public int AttackValue { get; set; }
+
+    [JsonPropertyName("armor")] 
+    public int Armor { get; set; }
+
 }

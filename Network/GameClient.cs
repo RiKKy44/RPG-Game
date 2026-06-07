@@ -23,9 +23,9 @@ public class GameClient
     private readonly Dictionary<ConsoleKey, IAction> _localUIActions = new Dictionary<ConsoleKey, IAction>
     {
         { ConsoleKey.I, new ToggleInventoryAction() },
-        { ConsoleKey.H, new ShowHistoryAction() },
         { ConsoleKey.UpArrow, new InventoryScrollAction(-1) },
-        { ConsoleKey.DownArrow, new InventoryScrollAction(1) }
+        { ConsoleKey.DownArrow, new InventoryScrollAction(1) },
+        { ConsoleKey.H, new ShowHistoryAction() }
     };
 
     public async Task ConnectAsync(string ip, int port)
@@ -120,7 +120,26 @@ public class GameClient
         if (dto.Logs != null)
         {
             GameLogger.Instance.AllLogs.Clear();
-            foreach (var log in dto.Logs) GameLogger.Instance.Log(log);
+            foreach (var log in dto.Logs) 
+                GameLogger.Instance.Log(log);
+        }
+
+        _localState.CurrentView = (ViewMode)dto.CurrentView;
+
+        if (dto.CurrentEnemy != null)
+        {
+            _localState.CurrentEnemy = new Enemy(
+                new Position(dto.CurrentEnemy.X, dto.CurrentEnemy.Y),
+                dto.CurrentEnemy.Name,
+                dto.CurrentEnemy.Symbol,
+                dto.CurrentEnemy.Health,
+                dto.CurrentEnemy.AttackValue,
+                dto.CurrentEnemy.Armor,
+                GameLogic.Events.Species.Goblin); 
+        }
+        else
+        {
+            _localState.CurrentEnemy = null;
         }
 
         if (dto.MapItems != null)
@@ -149,6 +168,13 @@ public class GameClient
         {
             var key = Console.ReadKey(true).Key;
 
+
+            if(_localState != null && _localState.CurrentView == ViewMode.GameOver)
+            {
+                Console.Clear();
+                Environment.Exit(0);
+                return;
+            }
             if (_localUIActions.TryGetValue(key, out var localAction))
             {
                 lock (_renderLock)

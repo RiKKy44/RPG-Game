@@ -26,6 +26,8 @@ public class ConsoleView
         }
         else if (_state.CurrentView == ViewMode.Inventory) RenderInventoryScreen();
         else if (_state.CurrentView == ViewMode.Combat) RenderCombatScreen();
+        else if (_state.CurrentView == ViewMode.GameOver) RenderGameOverScreen();
+        else if (_state.CurrentView == ViewMode.History) RenderHistoryScreen();
         RenderLogs();
     }
     private void RenderMapScreen()

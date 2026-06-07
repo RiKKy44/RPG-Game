@@ -43,6 +43,7 @@ public class PlayerDTO
 
     [JsonPropertyName("gold")] 
     public int Gold { get; set; }
+
     [JsonPropertyName("inventory")]
     public List<string> InventoryItems { get; set; } = new List<string>();
 }

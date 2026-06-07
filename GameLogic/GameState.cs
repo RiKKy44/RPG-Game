@@ -20,7 +20,8 @@ public enum ViewMode
     Map,
     Inventory,
     Combat,
-    History
+    History,
+    GameOver
 }
 
 public class GameState
