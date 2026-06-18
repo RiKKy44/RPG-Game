@@ -1,4 +1,4 @@
-#  Console Roguelike RPG - Object-Oriented Design Project
+#  Console Roguelike RPG 
 
 An advanced console-based Roguelike game written in C# (.NET 9.0). This project was created as a comprehensive demonstration of applying software engineering best practices (SOLID, Loose Coupling) and classic design patterns in game architecture.
 
